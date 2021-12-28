@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54823938925",
+    "project_id": "directdemocracy-7370c",
+    "storage_bucket": "directdemocracy-7370c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54823938925:android:889d517fe0774785724864",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54823938925-vc38kkajidld25pae97i2hl1vrpels73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvtOuyKIjcKOEtdlQdfMzVo_4yLEgZc60"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54823938925-vc38kkajidld25pae97i2hl1vrpels73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
