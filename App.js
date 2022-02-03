@@ -12,6 +12,7 @@ import Profile from './screens/profile'
 import DummyView from './screens/dummyview';
 import ViewBill from './screens/billview';
 import billvoting from './screens/billvoting';
+import Homepage from './screens/Hompage';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const App = () => {
         <Stack.Screen name="View" component={DummyView} />
         <Stack.Screen name="ViewBill" component={ViewBill} />
         <Stack.Screen name="billvoting" component={billvoting}/>
+        <Stack.Screen name="Homepage" component={Homepage}/>
         
 
 
