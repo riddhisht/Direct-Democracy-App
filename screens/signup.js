@@ -7,6 +7,7 @@ import {
     TextInput
   } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 //   import { ReactNativeFirebase } from '@react-native-firebase/app';
 //   import database from '@react-native-firebase/database';
 
@@ -35,6 +36,18 @@ import auth from '@react-native-firebase/auth';
   .createUserWithEmailAndPassword(email, password)
   .then(() => {
     console.log('User account created & signed in!');
+      firestore()
+      .collection('Users')
+      .add({
+          Name: name,
+          Aadhar: aadhar,
+          Email : email,
+          Mobile_No : number,
+
+      })
+      .then(() => {
+          console.log('User added!');
+      });
   })
   .catch(error => {
     if (error.code === 'auth/email-already-in-use') {

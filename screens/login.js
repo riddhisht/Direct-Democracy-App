@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
         auth()
         .signInWithEmailAndPassword(email, pass)
         .then(() => {
-            console.log('User account created & signed in!');
+            console.log('User signed in!');
             
             console.log(email);
             navigation.replace('Homepage',{email:email})
