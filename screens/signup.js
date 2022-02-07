@@ -24,7 +24,7 @@ import firestore from '@react-native-firebase/firestore';
 //   };
 
   
-  const SignupScreen = () => {
+  const SignupScreen = ({navigation}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState('');
   const [number, setNum] = useState(0);
@@ -47,6 +47,7 @@ import firestore from '@react-native-firebase/firestore';
       })
       .then(() => {
           console.log('User added!');
+          navigation.navigate('Homepage',{email:email});
       });
   })
   .catch(error => {
@@ -59,11 +60,12 @@ import firestore from '@react-native-firebase/firestore';
     }
 
     console.error(error);
+    
   });
     //addItem(name, email, number, aadhar, password);
     //Alert.alert('Item saved successfully');
 
-
+    
 }
     return (
             <View style={styles.container}>
