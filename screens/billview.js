@@ -4,14 +4,21 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
 
 
   const ViewBill = ({route,navigation}) =>{
-    const title = route.params.title;
-    const preamble  = route.params.preamble;
-    const enac = route.params.enactingClause;
-    const  clause = route.params.clause;
-    const interpretationProvision = route.params.interpretationProvision;
-    const comingIntoForceProvision = route.params.comingIntoForceProvision;
-    const summary = route.params.summary;
-    const cost = route.params.cost;
+    const title = route.params.data.title;
+    const preamble  = route.params.data.preamble;
+    const enac = route.params.data.enactingClause;
+    const  clause = route.params.data.clause;
+    const interpretationProvision = route.params.data.interpretationProvision;
+    const comingIntoForceProvision = route.params.data.comingIntoForceProvision;
+    const summary = route.params.data.summary;
+    const cost = route.params.data.cost;
+    const upvotes=route.params.data.upvotes;
+    const downvotes=route.params.data.downvotes;
+    const bill_no=route.params.data.number;
+    const username= route.params.username;
+    const key = route.params.data.key;
+
+
    
    
     return(
@@ -40,7 +47,9 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
       <Text style = {styles.title}>Cost: </Text>
       <Text style = {styles.content}>{cost}</Text>
 
-        <Button title="vote" color="black" onPress={()=>navigation.navigate("billvoting", {'title':title})}/>
+        <Button title="vote" color="black" onPress={()=>navigation.navigate("billvoting", {'title':title,'username':username,
+                                                     'upvotes':upvotes,"downvotes":downvotes,
+                                                     'bill_no':bill_no,"key":key})}/>
       <Text>{"\n \n"}</Text>
       </ScrollView>
         

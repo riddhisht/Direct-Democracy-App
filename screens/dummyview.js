@@ -2,43 +2,55 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
   TouchableOpacity,Alert,TouchableWithoutFeedback,Keyboard } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { date } from 'yup/lib/locale';
+import firestore from '@react-native-firebase/firestore';
+import { ActivityIndicator } from 'react-native';
 
-
-
-  const DummyView = ({navigation})=> {
-    
+  const DummyView = ({navigation,route})=> {
+    const username=route.params.name;
+    const [period,setPeriod]=useState("21/2/21");
     const [dat, setDat] = useState([]);
-    const [period,setperiod] = useState("23/12/2021"); 
-    async function Dummy(){
-       const response = await fetch('https://directdemo-c8f7a-default-rtdb.asia-southeast1.firebasedatabase.app/bills.json');
+    const [loading, setloading] = useState(true);
+    useEffect(() => {
+      const subscriber = firestore()
+       .collection('Bills')
+       .get()
+       .then(collectionSnapshot => {
+              const bills=[]
+               collectionSnapshot
+               .forEach(documentSnapshot => {
+                   
+                   //console.log('User ID: ', documentSnapshot.id,documentSnapshot.data().number,documentSnapshot.data().title);
+                          
+                              bills.push({'key':documentSnapshot.id,'number':documentSnapshot.data().number, 
+                              'title':documentSnapshot.data().title,
+                              'preamble':documentSnapshot.data().preamble,
+                              'enactingClause':documentSnapshot.data().enactingClause,
+                              'clause': documentSnapshot.data().clause,
+                              'interpretationProvision': documentSnapshot.data().interpretationProvision,
+                              'comingIntoForceProvision': documentSnapshot.data().comingIntoForceProvision,
+                              'summary': documentSnapshot.data().summary,
+                              'cost': documentSnapshot.data().cost,
+                            'downvotes':documentSnapshot.data()["total downvotes"],
+                            'upvotes':documentSnapshot.data()["total upvotes"]});
+               });
+               setDat(bills);
+               setloading(false);
+       });
+       return ()=>subscriber;
+    })
+    
        
-       const resdata = await response.json();
-       //console.log(resdata);
-
-       const arr = [];
-       for(const key in resdata){
-           arr.push({'key':key,'number':resdata[key].number, 
-            'title':resdata[key].title,
-            'preamble':resdata[key].preamble,
-            'enactingClause':resdata[key].enactingClause,
-            'clause': resdata[key].clause,
-            'interpretationProvision': resdata[key].interpretationProvision,
-            'comingIntoForceProvision': resdata[key].comingIntoForceProvision,
-            'summary': resdata[key].summary,
-            'cost': resdata[key].cost})
-       }  
-       //console.log(arr[0]);
+      
        
-       setDat(arr);
-       //return arr;
-
+     
+      //  console.log("hey",dat);
+       
+       
+  
+    
+    if(loading){
+      return <ActivityIndicator />;
     }
-    useEffect(()=>{
-        Dummy();
-    },[])
-    
-    
       
     return(
         <View style={styles.container}>
@@ -48,7 +60,7 @@ import { date } from 'yup/lib/locale';
         renderItem={({ item }) => (
           // return a component using that data
           <TouchableOpacity
-          onPress={() => navigation.navigate('ViewBill',item)}>
+          onPress={() => navigation.navigate('ViewBill',{data:item,username:username})}>
             <View style={styles.listitem}>
                     <View>
                     <Text style={styles.title}>
@@ -57,7 +69,11 @@ import { date } from 'yup/lib/locale';
 
                     <Text style={styles.number}>
                     Bill Number: {item.number} {"\n"}
-                    Voting ends on   {period}
+                    Voting ends on   {period} {"\n"}
+                <Text>upvotes:{item.upvotes}</Text> {"\n"}
+                <Text>downvotes:{item.downvotes}</Text>
+                <Text>key:{item.key}</Text>
+
                 </Text>
                 </View>
                 <View style={styles.avatar}>
@@ -70,6 +86,7 @@ import { date } from 'yup/lib/locale';
                 
                 }}/>
                 <Text>Jane Doe</Text>
+                
                 </View>
             </View>
             </TouchableOpacity>

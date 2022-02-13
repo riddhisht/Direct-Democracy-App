@@ -24,6 +24,8 @@ export default function Hompage({route,navigation}) {
     <View>
       <Text>Welcome, {name} </Text>
       <Button title='Signout' color='blue' onPress={()=>navigation.replace("Login")}/>
+      <Button title='Bill Proposal' color='blue' onPress={()=>navigation.navigate('Bill Proposal',{name:name})}/>
+      <Button title="Bills" color="#841584" onPress={() => navigation.navigate('View',{name:name})}  />
     </View>
   );
 }

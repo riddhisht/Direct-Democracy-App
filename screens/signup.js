@@ -47,7 +47,7 @@ import firestore from '@react-native-firebase/firestore';
       })
       .then(() => {
           console.log('User added!');
-          navigation.navigate('Homepage',{email:email});
+          navigation.replace('Homepage',{email:email});
       });
   })
   .catch(error => {

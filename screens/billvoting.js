@@ -9,23 +9,28 @@ import {
   } from 'react-native';
   import RNPoll, { IChoice } from "react-native-poll";
   import RNAnimated from "react-native-animated-component";
- 
+  import firestore from '@react-native-firebase/firestore';
+
 
   const billvoting = ({route}) => {
+    var upvotes=route.params.upvotes;
+    var downvotes=route.params.downvotes;
+    const key = route.params.key;
+    const title = route.params.title;
+    const username = route.params.username;
+    const bill_no = route.params.bill_no;
     const choices: Array<IChoice> = [
-        { id: 1, choice: "For the Bill", votes: 47 },
-        { id: 2, choice: "Against the Bill", votes: 39 },
-        { id: 3, choice: "Choose not to Vote", votes: 14 },
-        
+        { id: 1, choice: "For the Bill", votes: upvotes },
+        { id: 2, choice: "Against the Bill", votes: downvotes },
       ];
 
-      const title = route.params.title;
+      
 
       return(
           <View >
               <View style={styles.container}>
               <Text style = {styles.text}>
-                  Bill Number: 10112934 {"\n"}{"\n"}
+                  Bill Number: {bill_no} {"\n"}{"\n"}
                   Title: {title}  {"   \n"}{"\n"}
                   Voting ends on: December 23, 2021. {"\n"}{"\n"}
               </Text>
@@ -37,15 +42,43 @@ import {
 
 appearFrom="left"
   animationDuration={1750}
-  totalVotes={100}
+  totalVotes={upvotes+downvotes}
   choices={choices}
   PollContainer={RNAnimated}
   PollItemContainer={RNAnimated}
   choiceTextStyle ={styles.text2}
   borderColor= 'black'
   //pollContainerStyle = {styles.cont}
-  onChoicePress={(selectedChoice: IChoice) =>
+  onChoicePress={(selectedChoice: IChoice) =>{
     console.log("SelectedChoice: ", selectedChoice)
+    if(selectedChoice.id==1){
+      upvotes+=1;
+    firestore()
+    .collection('Bills')
+    .doc(key)
+    .update({
+     "total upvotes": upvotes,
+    })
+  .then(() => {
+    console.log('User updated!');
+  });
+
+    }
+    else{
+      downvotes+=1;
+    firestore()
+    .collection('Bills')
+    .doc(key)
+    .update({
+     "total downvotes": downvotes,
+    })
+  .then(() => {
+    console.log('User updated!');
+  });
+    }
+  }
+    
+
   }
 />
 <View>

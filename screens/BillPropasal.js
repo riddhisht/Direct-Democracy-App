@@ -3,6 +3,7 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
   TouchableOpacity,Alert,TouchableWithoutFeedback,Keyboard } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import firestore from '@react-native-firebase/firestore';
 
 const validationSchema=yup.object({
     number:
@@ -41,7 +42,8 @@ const validationSchema=yup.object({
         .required(),
 })
 
-export default function BillProposal(){
+export default function BillProposal({route}){
+    Name=route.params.name;
     return(
        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        
@@ -58,18 +60,24 @@ export default function BillProposal(){
             comingIntoForceProvision:"",summary:"",cost:""}}
             onSubmit={(values,actions)=>{
                 actions.resetForm();
+                values["name"]=Name;
+                values["total downvotes"]=0;
+                values["total upvotes"]=0;
                 console.log(values);
 
-                fetch('https://directdemo-c8f7a-default-rtdb.asia-southeast1.firebasedatabase.app/bills.json',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(
-                        values
-                    )
-                })
+                // fetch('https://directdemo-c8f7a-default-rtdb.asia-southeast1.firebasedatabase.app/bills.json',
+                // {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(
+                //         values
+                //     )
+                // })
+                firestore()
+                        .collection('Bills')
+                        .add(values)
             }
 
 
