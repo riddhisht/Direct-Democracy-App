@@ -16,6 +16,7 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
     const downvotes=route.params.data.downvotes;
     const bill_no=route.params.data.number;
     const username= route.params.username;
+    const userId=route.params.userId;
     const key = route.params.data.key;
 
 
@@ -49,7 +50,8 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
 
         <Button title="vote" color="black" onPress={()=>navigation.navigate("billvoting", {'title':title,'username':username,
                                                      'upvotes':upvotes,"downvotes":downvotes,
-                                                     'bill_no':bill_no,"key":key})}/>
+                                                     'bill_no':bill_no,"key":key,
+                                                     'userId':userId})}/>
       <Text>{"\n \n"}</Text>
       </ScrollView>
         

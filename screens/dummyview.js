@@ -7,6 +7,7 @@ import { ActivityIndicator } from 'react-native';
 
   const DummyView = ({navigation,route})=> {
     const username=route.params.name;
+    const userId=route.params.userId;
     const [period,setPeriod]=useState("21/2/21");
     const [dat, setDat] = useState([]);
     const [loading, setloading] = useState(true);
@@ -60,7 +61,7 @@ import { ActivityIndicator } from 'react-native';
         renderItem={({ item }) => (
           // return a component using that data
           <TouchableOpacity
-          onPress={() => navigation.navigate('ViewBill',{data:item,username:username})}>
+          onPress={() => navigation.navigate('ViewBill',{data:item,username:username,userId:userId})}>
             <View style={styles.listitem}>
                     <View>
                     <Text style={styles.title}>
