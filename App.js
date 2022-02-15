@@ -13,6 +13,8 @@ import DummyView from './screens/dummyview';
 import ViewBill from './screens/billview';
 import billvoting from './screens/billvoting';
 import Homepage from './screens/Hompage';
+import ArtUpload from './screens/ArticleUpload';
+import { ScreenStackHeaderLeftView } from 'react-native-screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,7 @@ const App = () => {
         <Stack.Screen name="ViewBill" component={ViewBill} />
         <Stack.Screen name="billvoting" component={billvoting}/>
         <Stack.Screen name="Homepage" component={Homepage}/>
+        <Stack.Screen name = "ArtUpload" component={ArtUpload}/>
         
 
 
