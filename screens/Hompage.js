@@ -27,6 +27,7 @@ export default function Hompage({route,navigation}) {
       <Button title='Bill Proposal' color='blue' onPress={()=>navigation.navigate('Bill Proposal',{name:name})}/>
       <Button title="Bills" color="#841584" onPress={() => navigation.navigate('View',{name:name})}  />
       <Button title="Article" color="#841584" onPress={() => navigation.navigate('ArtUpload',{name:name})}  />
+      <Button title="Article List" color="#841584" onPress={() => navigation.navigate('ArcList',{name:name})}  />
 
     </View>
   );
