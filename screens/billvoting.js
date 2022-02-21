@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     View,
     Text,
     Button,
     StyleSheet,
     TextInput,
+    ActivityIndicator,
     Pressable 
   } from 'react-native';
   import RNPoll, { IChoice } from "react-native-poll";
@@ -13,20 +14,73 @@ import {
 
 
   const billvoting = ({route}) => {
+    const [voted,setVoted]=useState(false);
+    const [loading,setloading]=useState(true);
+    useEffect(() => {
+      const subscriber = firestore()
+                        .collection('Users')
+                        .doc(userId)
+                        .collection('Bills_voted')
+                        .doc(key)
+                        .get()
+                        .then((docSnapshot)=>{
+                          console.log(key);
+                          if(docSnapshot.exists){
+                          console.log("hello")
+                          setloading(false);
+                          setVoted(true);
+                          console.log(voted);
+                          }
+                          else{
+                            console.log("hey")
+                            setloading(false);
+                            setVoted(false);
+                            console.log(voted);
+                          }
+                          
+                        }
+                        )
+  
+
+    
+
+    }, [])
+    
     var upvotes=route.params.upvotes;
     var downvotes=route.params.downvotes;
     const key = route.params.key;
     const title = route.params.title;
     const username = route.params.username;
     const bill_no = route.params.bill_no;
+    const userId = route.params.userId;
+    console.log("userId:",userId);
+    
     const choices: Array<IChoice> = [
         { id: 1, choice: "For the Bill", votes: upvotes },
         { id: 2, choice: "Against the Bill", votes: downvotes },
       ];
 
       
+      if (loading){
+        return <ActivityIndicator/>;
+      }
+      else if (voted){return(
+        <View>
+        <View style={styles.container}>
+              <Text style = {styles.text}>
+                  Bill Number: {bill_no} {"\n"}{"\n"}
+                  Title: {title}  {"   \n"}{"\n"}
+                  Voting ends on: December 23, 2021. {"\n"}{"\n"}
+              </Text>
 
-      return(
+               
+              </View>
+
+              <Text>You have already voted for this bill</Text>
+              </View>);
+      }
+      else{
+        return(
           <View >
               <View style={styles.container}>
               <Text style = {styles.text}>
@@ -54,6 +108,16 @@ appearFrom="left"
     if(selectedChoice.id==1){
       upvotes+=1;
     firestore()
+    .collection('Users')
+    .doc(userId)
+    .collection('Bills_voted')
+    .doc(key)
+    .set(
+      {
+        vote:"upvote"
+      }
+    )
+    firestore()
     .collection('Bills')
     .doc(key)
     .update({
@@ -65,7 +129,17 @@ appearFrom="left"
 
     }
     else{
-      downvotes+=1;
+    downvotes+=1;
+    firestore()
+    .collection('Users')
+    .doc(userId)
+    .collection('Bills_voted')
+    .doc(key)
+    .set(
+      {
+        vote:"downvote"
+      }
+    )
     firestore()
     .collection('Bills')
     .doc(key)
@@ -90,6 +164,8 @@ appearFrom="left"
     
           </View>
       );
+      }
+      
   };
 
   const styles = StyleSheet.create({
