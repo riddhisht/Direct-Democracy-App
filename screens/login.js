@@ -96,7 +96,7 @@ const LoginScreen = ({navigation}) => {
           color="#841584"
           onPress={() => navigation.navigate('Signup')}
         />
-        <Button
+        {/* <Button
           title="Bill Proposal"
           color="#841584"
           onPress={() => navigation.navigate('Bill Proposal')}
@@ -105,8 +105,8 @@ const LoginScreen = ({navigation}) => {
           title="Bill Voting"
           color="#841584"
           onPress={() => navigation.navigate('billvoting')}
-        />
-        <Button
+        /> */}
+        {/* <Button
           title="Profile Page"
           color="#841584"
           onPress={() => navigation.navigate('Profile')}
@@ -125,7 +125,7 @@ const LoginScreen = ({navigation}) => {
           title="Article"
           color="#841584"
           onPress={() => navigation.navigate('ArtUpload', {name: 'ken'})}
-        />
+        /> */}
       </View>
     );
   }
