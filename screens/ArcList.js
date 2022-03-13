@@ -96,8 +96,8 @@ const ArcList = ({navigation}) => {
               </View>
             </View>
             <View>
-              <Text>Likes</Text>
-              <Text>Dislikes</Text>
+            <Button title="Like" color="green" />
+              <Button title="Dislike" color="red" />
             </View>
           </TouchableOpacity>
         )}
@@ -144,6 +144,9 @@ const styles = StyleSheet.create({
   },
   avatar: {
     paddingLeft: 50,
+  },
+  likeDislikeTemp: {
+    color: 'white',
   },
 });
 export default ArcList;
