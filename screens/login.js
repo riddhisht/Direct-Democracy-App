@@ -26,14 +26,12 @@ const LoginScreen = ({navigation}) => {
     })
       .then(response => response.json())
       .then(json =>
-        // {console.log(json.Hello + " " + json.Namaste + " "+ json.working)})
+
         {
           console.log(json);
         },
       );
-    // fetch('http://127.0.0.1:5000')
-    // .then(response=>response.json()
-    // .then(data=>console.log(data)))
+
   }, []);
 
   useEffect(() => {
@@ -96,36 +94,7 @@ const LoginScreen = ({navigation}) => {
           color="#841584"
           onPress={() => navigation.navigate('Signup')}
         />
-        {/* <Button
-          title="Bill Proposal"
-          color="#841584"
-          onPress={() => navigation.navigate('Bill Proposal')}
-        />
-        <Button
-          title="Bill Voting"
-          color="#841584"
-          onPress={() => navigation.navigate('billvoting')}
-        /> */}
-        {/* <Button
-          title="Profile Page"
-          color="#841584"
-          onPress={() => navigation.navigate('Profile')}
-        />
-        <Button
-          title="Bills"
-          color="#841584"
-          onPress={() => navigation.navigate('View')}
-        />
-        <Button
-          title="ViewBill"
-          color="#841584"
-          onPress={() => navigation.navigate('ViewBill')}
-        />
-        <Button
-          title="Article"
-          color="#841584"
-          onPress={() => navigation.navigate('ArtUpload', {name: 'ken'})}
-        /> */}
+       
       </View>
     );
   }

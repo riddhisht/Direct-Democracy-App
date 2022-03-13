@@ -18,12 +18,14 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
     const username= route.params.username;
     const userId=route.params.userId;
     const key = route.params.data.key;
+    const status = route.params.data.status
 
 
    
    
     return(
       <ScrollView style = {styles.container}>
+      <Text>{status}</Text>
       <Text style = {styles.title}>Title</Text>
       <Text style = {styles.content}>{title}</Text>
       <Text  style = {styles.title}>preamble</Text>
@@ -48,11 +50,19 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
       <Text style = {styles.title}>Cost: </Text>
       <Text style = {styles.content}>{cost}</Text>
 
+      { status==='Active' &&
         <Button title="vote" color="black" onPress={()=>navigation.navigate("billvoting", {'title':title,'username':username,
                                                      'upvotes':upvotes,"downvotes":downvotes,
                                                      'bill_no':bill_no,"key":key,
                                                      'userId':userId})}/>
+      }
+
+      <Text>{"\n"}</Text>
+
+      <Button title="Check Articles"  onPress={()=>navigation.navigate("ArcList")}/>
       <Text>{"\n \n"}</Text>
+
+      
       </ScrollView>
         
     );

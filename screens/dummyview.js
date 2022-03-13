@@ -32,6 +32,7 @@ import { ActivityIndicator } from 'react-native';
                               'summary': documentSnapshot.data().summary,
                               'cost': documentSnapshot.data().cost,
                             'downvotes':documentSnapshot.data()["total downvotes"],
+                            'status': documentSnapshot.data()['status'],
                             'upvotes':documentSnapshot.data()["total upvotes"]});
                });
                setDat(bills);
@@ -55,7 +56,7 @@ import { ActivityIndicator } from 'react-native';
       
     return(
         <View style={styles.container}>
-        
+        <Button title="PrevBills"  style = {styles.butt} onPress={()=>navigation.navigate("PreviousBills")}/>
         <FlatList
         data = {dat}
         renderItem={({ item }) => (
@@ -147,6 +148,12 @@ import { ActivityIndicator } from 'react-native';
   
         
         
+      },
+      butt: {
+        
+        position: 'absolute',
+        right: 5,
+        top: 5,
       }
   });
   export default DummyView;

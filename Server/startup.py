@@ -6,8 +6,10 @@ app = Flask(__name__)
 @app.route("/", methods=['GET','POST'])
 def send():
     if request.method=='POST':
-        return request.get_json()
-    # return "dataaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        a = request.get_json()
+        t = a['password'] + "hello ji hello"
+        return jsonify(t)
+        # return "dataaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     return jsonify({"Hello": 'world', "Namaste":"Duniya", "working": True})
 
     # if request.method == 'POST':

@@ -17,6 +17,7 @@ import ArtUpload from './screens/ArticleUpload';
 import { ScreenStackHeaderLeftView } from 'react-native-screens';
 import ArcList from './screens/ArcList';
 import ArticleView from './screens/ArticleView';
+import PreviousBills from './screens/PreviousBills';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
         <Stack.Screen name = "ArtUpload" component={ArtUpload}/>
         <Stack.Screen name = "ArcList" component={ArcList}/>
         <Stack.Screen name = "ArticleView" component={ArticleView}/>
+        <Stack.Screen name='PreviousBills' component = {PreviousBills}/>
         
 
 
