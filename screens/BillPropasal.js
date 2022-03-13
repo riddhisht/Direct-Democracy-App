@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableHighlight,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -180,7 +181,11 @@ export default function BillProposal() {
                       {props.touched.cost && props.errors.cost}
                     </Text>
                     <View style={styles.button}>
-                      <Button title="Submit" onPress={props.handleSubmit} />
+                      <Button
+                        title="Submit"
+                        onPress={props.handleSubmit}
+                        color="#18A999"
+                      />
                     </View>
                   </View>
                 </View>
@@ -222,6 +227,9 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
+    borderRadius: 10,
+    backgroundColor: 'yellow',
+    marginTop: 20,
   },
   header: {
     marginTop: 30,
