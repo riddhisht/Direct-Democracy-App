@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -7,7 +7,8 @@ import {
     TextInput
   } from 'react-native';
 import auth from "@react-native-firebase/auth"
-import { useState,useEffect } from 'react';
+//import { useState,useEffect } from 'react';
+
 
 
 const LoginScreen = ({ navigation }) => {
@@ -16,6 +17,31 @@ const LoginScreen = ({ navigation }) => {
 
     const [email,setEmail] = useState("");
     const [pass,setPass] = useState("");
+    
+useEffect(()=>{
+    console.log("helllllll")
+  
+    fetch("http://10.0.2.2:5000/", {
+      method : 'POST',
+      headers: { 
+        //   'Accept': 'application/json',
+      'Content-Type': 'application/json'
+  
+      },
+      body: JSON.stringify({
+        name: 'John',
+        password: "John123"
+      })
+    })
+    .then((response)=> response.json())
+    .then((json)=> 
+    // {console.log(json.Hello + " " + json.Namaste + " "+ json.working)})
+    {console.log(json)})
+    // fetch('http://127.0.0.1:5000')
+    // .then(response=>response.json()
+    // .then(data=>console.log(data)))
+  
+  }, [])
     useEffect(() => {
         navigation.setOptions({
             headerLeft: null
