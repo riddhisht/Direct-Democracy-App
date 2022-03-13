@@ -10,7 +10,11 @@ import DummyView from './screens/dummyview';
 import ViewBill from './screens/billview';
 import billvoting from './screens/billvoting';
 import Homepage from './screens/Hompage';
+<<<<<<< HEAD
 import PreviousBills from './screens/PreviousBills';
+=======
+// import PreviousBills from './screens/PreviousBills';
+>>>>>>> a243bb895cfd72798afd65e0e82b82f1c40fff8b
 import {ScreenStackHeaderLeftView} from 'react-native-screens';
 import ArcList from './screens/ArcList';
 import ArticleView from './screens/ArticleView';
@@ -46,7 +50,11 @@ const Tabs = () => {
       <Stack.Screen name="ArcList" component={ArcList} />
       <Stack.Screen name="ArticleView" component={ArticleView} />
       <Stack.Screen name="ArticleUp" component={ArticleUp} />
+<<<<<<< HEAD
       <Stack.Screen name="PreviousBills" component={PreviousBills} />
+=======
+      {/* <Stack.Screen name="PreviousBills" component={PreviousBills} /> */}
+>>>>>>> a243bb895cfd72798afd65e0e82b82f1c40fff8b
     </Stack.Navigator>
   );
 };
