@@ -1,7 +1,21 @@
+<<<<<<< HEAD
 import React from 'react';
 import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useState, useEffect} from 'react';
+=======
+import React, {useEffect, useState} from 'react';
+import {
+    View,
+    Text,
+    Button,
+    StyleSheet,
+    TextInput
+  } from 'react-native';
+import auth from "@react-native-firebase/auth"
+//import { useState,useEffect } from 'react';
+
+>>>>>>> b76b93eb3820bd5f79b538265fc9a1e2241d8194
 
 const LoginScreen = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
@@ -10,6 +24,7 @@ const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
+<<<<<<< HEAD
   useEffect(() => {
     console.log('helllllll');
 
@@ -62,6 +77,46 @@ const LoginScreen = ({navigation}) => {
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
           console.log('That email address is already in use!');
+=======
+    const [email,setEmail] = useState("");
+    const [pass,setPass] = useState("");
+    
+useEffect(()=>{
+    console.log("helllllll")
+  
+    fetch("http://10.0.2.2:5000/", {
+      method : 'POST',
+      headers: { 
+        //   'Accept': 'application/json',
+      'Content-Type': 'application/json'
+  
+      },
+      body: JSON.stringify({
+        name: 'John',
+        password: "John123"
+      })
+    })
+    .then((response)=> response.json())
+    .then((json)=> 
+    // {console.log(json.Hello + " " + json.Namaste + " "+ json.working)})
+    {console.log(json)})
+    // fetch('http://127.0.0.1:5000')
+    // .then(response=>response.json()
+    // .then(data=>console.log(data)))
+  
+  }, [])
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: null
+          });
+    
+      
+    }, [navigation]);
+    
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+>>>>>>> b76b93eb3820bd5f79b538265fc9a1e2241d8194
         }
 
         if (error.code === 'auth/invalid-email') {
