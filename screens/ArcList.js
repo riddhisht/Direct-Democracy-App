@@ -21,6 +21,35 @@ const ArcList = ({navigation}) => {
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
+    console.log('helllllll');
+    if (load ===false){
+
+      fetch('http://10.0.2.2:5000/', {
+
+        method: 'POST',
+        headers: {
+          //   'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: 'John',
+          password: 'John123',
+          data: dat,
+        }),
+      })
+        .then(response => response.json())
+        .then(json =>
+  
+          {
+            console.log(json);
+          },
+        );
+    }
+    
+
+  }, [load]);
+  useEffect(() => {
+    console.log("pehle hua");
     const art = firestore()
       .collection('Article')
       .get()
@@ -42,7 +71,7 @@ const ArcList = ({navigation}) => {
         setLoad(false);
       });
     return () => art;
-  });
+  },[]);
   if (load) {
     return <ActivityIndicator />;
   }

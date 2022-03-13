@@ -18,7 +18,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const ArticleUp = ({navigation, route}) => {
   const [title, settitle] = useState('');
   const [data, setdata] = useState('');
-  const [hashtags, sethashtags] = useState('');
+  const [hashtags, sethashtags] = useState([]);
   const [likes, setlikes] = useState(0);
   const [dislikes, setdislikes] = useState(0);
   //   const uname = route.params.name;
@@ -59,7 +59,7 @@ const ArticleUp = ({navigation, route}) => {
             placeholder="Add some hashtags for your article"
             //onChangeText = {(val)=> {setsalonname(val.charAt(0).toUpperCase()+ val.slice(1).toLowerCase())}}
             onChangeText={val => {
-              sethashtags(val);
+              sethashtags(val.split(" "));
             }}
             style={styles.inputs}
           />

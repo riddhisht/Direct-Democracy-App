@@ -7,17 +7,21 @@ app = Flask(__name__)
 def send():
     if request.method=='POST':
         a = request.get_json()
-        t = a['password'] + "hello ji hello"
-        return jsonify(t)
-        # return "dataaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    return jsonify({"Hello": 'world', "Namaste":"Duniya", "working": True})
+        # t = a['password'] + "hello ji hello"
+        print("---------------")
+        matrix = a['data']
 
-    # if request.method == 'POST':
-    #     userId = request.get('userId')
-        
-    #     page = request.get('page')
-    #     return "Hello World!"+page+userId
-    # return "hw-"
+        for i in matrix:
+            print(i)
+            print("next object")
+
+        print(a['data'][1])
+        return jsonify(a['data'][1])
+
+
+    else: 
+        return jsonify({"Hello": 'world', "Namaste":"Duniya", "working": True})
+
 
 
 if __name__ == '__main__':
