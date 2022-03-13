@@ -10,6 +10,7 @@ import DummyView from './screens/dummyview';
 import ViewBill from './screens/billview';
 import billvoting from './screens/billvoting';
 import Homepage from './screens/Hompage';
+import PreviousBills from './screens/PreviousBills';
 import {ScreenStackHeaderLeftView} from 'react-native-screens';
 import ArcList from './screens/ArcList';
 import ArticleView from './screens/ArticleView';
@@ -45,6 +46,7 @@ const Tabs = () => {
       <Stack.Screen name="ArcList" component={ArcList} />
       <Stack.Screen name="ArticleView" component={ArticleView} />
       <Stack.Screen name="ArticleUp" component={ArticleUp} />
+      <Stack.Screen name="PreviousBills" component={PreviousBills} />
     </Stack.Navigator>
   );
 };
