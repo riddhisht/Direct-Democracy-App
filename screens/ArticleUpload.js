@@ -15,13 +15,14 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const Entry = ({navigation, route}) => {
+const ArticleUp = ({navigation, route}) => {
   const [title, settitle] = useState('');
   const [data, setdata] = useState('');
   const [hashtags, sethashtags] = useState('');
   const [likes, setlikes] = useState(0);
   const [dislikes, setdislikes] = useState(0);
-  const uname = route.params.name;
+  //   const uname = route.params.name;
+  const uname = 'route.params.name';
 
   const article = {
     title: title,
@@ -141,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Entry;
+export default ArticleUp;
