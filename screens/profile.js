@@ -1,5 +1,6 @@
 import {Button, ThemeProvider, Avatar} from 'react-native-elements';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+import firestore from '@react-native-firebase/firestore';
 import {
   StyleSheet,
   Text,
@@ -8,47 +9,53 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Alert,
+  ActivityIndicator
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 function Profile() {
+  const name="ken";
   const [toggleState, setToggleState] = useState(1);
-  const [articles, setarticles] = useState([
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 1,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 2,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 3,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 4,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 5,
-    },
-  ]);
+  const [articles, setarticles] = useState([]);
+  const [loading,setloading]=useState(true);
+  useEffect(() => {
+    const subscriber=firestore()
+  .collection('Article')
+  // Filter results
+  .where('uname', '==', name)
+  .get()
+  .then(querySnapshot => {
+    console.log(querySnapshot);
+    ar = [];
+    querySnapshot.forEach(documentSnapshot => {
+      console.log(documentSnapshot.id,documentSnapshot.data());
+      ar.push({
+        key: documentSnapshot.id,
+        title: documentSnapshot.data().title,
+        data: documentSnapshot.data().data,
+        likes: documentSnapshot.data().likes,
+        dislikes: documentSnapshot.data().dislikes,
+        hashtags: documentSnapshot.data().hashtags,
+        uname: documentSnapshot.data().uname,
+      });
+    
+    
+  });
+  setarticles(ar);
+  setloading(false);
+});
+
+  
+    return () => subscriber
+  }, [])
+  
   const toggleTab = index => {
     setToggleState(index);
   };
   console.log(toggleState);
+  if( loading){
+    return <ActivityIndicator/>
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.userinfo}>
@@ -109,7 +116,7 @@ function Profile() {
                   style={
                     toggleState === 1 ? styles.visible : styles.notVisible
                   }>
-                  <Text>Hello 1</Text>
+                  <Text>{item.title}</Text>
                 </View>
                 <View
                   style={
