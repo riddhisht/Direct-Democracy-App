@@ -5,20 +5,20 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  ScrollView,
   FlatList,
-  TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 function Profile() {
-  const name="ken";
+  const name="manav";
   const [toggleState, setToggleState] = useState(1);
   const [articles, setarticles] = useState([]);
+  const [bills, setbills] = useState([]);
+  const [data,setdata]=useState([]);
   const [loading,setloading]=useState(true);
+
   useEffect(() => {
-    const subscriber=firestore()
+  const subscriber=firestore()
   .collection('Article')
   // Filter results
   .where('uname', '==', name)
@@ -40,12 +40,38 @@ function Profile() {
     
     
   });
+  // bill fetching
+  
   setarticles(ar);
   setloading(false);
 });
+const sub2=firestore()
+  .collection('Bills')
+  // Filter results
+  .where('name', '==', name)
+  .get()
+  .then(querySnapshot => {
+    console.log(querySnapshot);
+    const big = [];
+    querySnapshot.forEach(documentSnapshot => {
+      console.log(documentSnapshot.id,documentSnapshot.data());
+      big.push({
+        key: documentSnapshot.id,
+        title: documentSnapshot.data().title,
+        upvotes: documentSnapshot.data()["total downvotes"],
+        downvotes: documentSnapshot.data()["total upvotes"],
+        uname: documentSnapshot.data().name,
+      });
+    
+    
+  });
+  // bill fetching
+  
+  setbills(big);
+});
 
   
-    return () => subscriber
+    return () => [subscriber,sub2];
   }, [])
   
   const toggleTab = index => {
@@ -80,14 +106,18 @@ function Profile() {
         <View>
           <Button
             style={toggleState === 1 ? styles.visible : styles.notVisible}
-            onPress={() => setToggleState(1)}
+            onPress={() => {setToggleState(1);
+            setdata(articles)
+            }}
             title="One"
           />
         </View>
         <View>
           <Button
             style={toggleState === 2 ? styles.visible : styles.notVisible}
-            onPress={() => setToggleState(2)}
+            onPress={() => {setToggleState(2);
+            setdata(bills);
+            }}
             title="Two"
           />
         </View>
@@ -107,8 +137,9 @@ function Profile() {
         </View>
       </View>
       <View style={styles.feed}>
+      
         <FlatList
-          data={articles}
+          data={data}
           renderItem={({item}) => {
             return (
               <View style={styles.listItem}>
@@ -122,7 +153,7 @@ function Profile() {
                   style={
                     toggleState === 2 ? styles.visible : styles.notVisible
                   }>
-                  <Text>There 2</Text>
+                  <Text>{item.title}</Text>
                 </View>
                 <View
                   style={
