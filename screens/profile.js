@@ -1,54 +1,87 @@
 import {Button, ThemeProvider, Avatar} from 'react-native-elements';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+import firestore from '@react-native-firebase/firestore';
 import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  ScrollView,
   FlatList,
-  TouchableOpacity,
-  Alert,
+  ActivityIndicator
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 function Profile() {
+  const name="manav";
   const [toggleState, setToggleState] = useState(1);
-  const [articles, setarticles] = useState([
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 1,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 2,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 3,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 4,
-    },
-    {
-      content: 'This my article let me figure out what to write',
-      likes: 10,
-      dislikes: 3,
-      key: 5,
-    },
-  ]);
+  const [articles, setarticles] = useState([]);
+  const [bills, setbills] = useState([]);
+  const [data,setdata]=useState([]);
+  const [loading,setloading]=useState(true);
+
+  useEffect(() => {
+  const subscriber=firestore()
+  .collection('Article')
+  // Filter results
+  .where('uname', '==', name)
+  .get()
+  .then(querySnapshot => {
+    console.log(querySnapshot);
+    ar = [];
+    querySnapshot.forEach(documentSnapshot => {
+      console.log(documentSnapshot.id,documentSnapshot.data());
+      ar.push({
+        key: documentSnapshot.id,
+        title: documentSnapshot.data().title,
+        data: documentSnapshot.data().data,
+        likes: documentSnapshot.data().likes,
+        dislikes: documentSnapshot.data().dislikes,
+        hashtags: documentSnapshot.data().hashtags,
+        uname: documentSnapshot.data().uname,
+      });
+    
+    
+  });
+  // bill fetching
+  
+  setarticles(ar);
+  setloading(false);
+});
+const sub2=firestore()
+  .collection('Bills')
+  // Filter results
+  .where('name', '==', name)
+  .get()
+  .then(querySnapshot => {
+    console.log(querySnapshot);
+    const big = [];
+    querySnapshot.forEach(documentSnapshot => {
+      console.log(documentSnapshot.id,documentSnapshot.data());
+      big.push({
+        key: documentSnapshot.id,
+        title: documentSnapshot.data().title,
+        upvotes: documentSnapshot.data()["total downvotes"],
+        downvotes: documentSnapshot.data()["total upvotes"],
+        uname: documentSnapshot.data().name,
+      });
+    
+    
+  });
+  // bill fetching
+  
+  setbills(big);
+});
+
+  
+    return () => [subscriber,sub2];
+  }, [])
+  
   const toggleTab = index => {
     setToggleState(index);
   };
   console.log(toggleState);
+  if( loading){
+    return <ActivityIndicator/>
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.userinfo}>
@@ -73,14 +106,18 @@ function Profile() {
         <View>
           <Button
             style={toggleState === 1 ? styles.visible : styles.notVisible}
-            onPress={() => setToggleState(1)}
+            onPress={() => {setToggleState(1);
+            setdata(articles)
+            }}
             title="One"
           />
         </View>
         <View>
           <Button
             style={toggleState === 2 ? styles.visible : styles.notVisible}
-            onPress={() => setToggleState(2)}
+            onPress={() => {setToggleState(2);
+            setdata(bills);
+            }}
             title="Two"
           />
         </View>
@@ -100,8 +137,9 @@ function Profile() {
         </View>
       </View>
       <View style={styles.feed}>
+      
         <FlatList
-          data={articles}
+          data={data}
           renderItem={({item}) => {
             return (
               <View style={styles.listItem}>
@@ -109,13 +147,13 @@ function Profile() {
                   style={
                     toggleState === 1 ? styles.visible : styles.notVisible
                   }>
-                  <Text>Hello 1</Text>
+                  <Text>{item.title}</Text>
                 </View>
                 <View
                   style={
                     toggleState === 2 ? styles.visible : styles.notVisible
                   }>
-                  <Text>There 2</Text>
+                  <Text>{item.title}</Text>
                 </View>
                 <View
                   style={
