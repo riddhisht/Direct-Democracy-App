@@ -25,13 +25,9 @@ const LoginScreen = ({navigation}) => {
       }),
     })
       .then(response => response.json())
-      .then(json =>
-
-        {
-          console.log(json);
-        },
-      );
-
+      .then(json => {
+        console.log(json);
+      });
   }, []);
 
   useEffect(() => {
@@ -77,24 +73,31 @@ const LoginScreen = ({navigation}) => {
   if (!user) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Email Id or Phone Number</Text>
-        <TextInput
-          placeholder="Enter Email ID"
-          onChangeText={val => setEmail(val)}
-        />
-        <Text style={styles.text}>Password</Text>
-        <TextInput
-          placeholder="Enter Password"
-          onChangeText={val => setPass(val)}
-        />
-        <Button title="Sign in" onPress={login} />
-
-        <Button
-          title="Sign up"
-          color="#841584"
-          onPress={() => navigation.navigate('Signup')}
-        />
-       
+        <View style={styles.whiteBg}>
+          <Text style={styles.headerText}>LOGIN</Text>
+          <Text style={styles.text}>username</Text>
+          <TextInput
+            placeholder="Enter Username"
+            onChangeText={val => setEmail(val)}
+            style={styles.inputStyle}
+          />
+          <Text style={styles.text}>password</Text>
+          <TextInput
+            placeholder="Enter Password"
+            onChangeText={val => setPass(val)}
+            style={styles.inputStyle}
+          />
+          <View style={styles.button}>
+            <Button title="Sign in" onPress={login} />
+          </View>
+          <View>
+            <Text
+              onPress={() => navigation.navigate('Signup')}
+              style={styles.signUp}>
+              Don't have an account? Sign Up
+            </Text>
+          </View>
+        </View>
       </View>
     );
   }
@@ -102,10 +105,13 @@ const LoginScreen = ({navigation}) => {
 };
 const styles = StyleSheet.create({
   text: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'red',
+    color: 'black',
+    fontSize: 18,
+    marginBottom: 10,
+    marginTop: 10,
+    fontWeight: 'bold',
   },
   container: {
     // flex:1,
@@ -113,6 +119,44 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // padding: 10,
     // color: 'white'
+    width: '100%',
+    backgroundColor: '#537A5A',
+    height: 900,
+  },
+  whiteBg: {
+    backgroundColor: 'white',
+    width: '80%',
+    marginTop: 100,
+    marginLeft: 35,
+    padding: 20,
+    borderRadius: 20,
+    height: 400,
+  },
+  inputStyle: {
+    backgroundColor: '#C4C4C4',
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 10,
+  },
+  button: {
+    width: 100,
+    marginLeft: 90,
+    marginTop: 15,
+  },
+  headerText: {
+    alignItems: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#000',
+    marginLeft: 100,
+    marginBottom: 10,
+  },
+  signUp: {
+    marginLeft: 10,
+    marginTop: 15,
+    fontSize: 18,
+    // fontWeight: 'bold',
+    color: '#18A999',
   },
 });
 

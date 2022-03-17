@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
 import React, {useEffect, useState} from 'react';
 import {
@@ -16,16 +17,62 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ActivityIndicator} from 'react-native';
-const ArcList = ({navigation}) => {
+const ArcList = ({navigation, route}) => {
   const [dat, setDat] = useState([]);
   const [load, setLoad] = useState(true);
+  const [tag, settag] = useState([]);
+  const [userKey, setUserKey] = useState({});
+  const [usetrigger, setusertrigger] = useState(true);
+  const userId = route.params.userId;
 
+  const liked = item => {
+    console.log('likedd', item);
+    setUserKey(item);
+    firestore()
+      .collection('Article')
+      .doc(item.key)
+      .update({
+        likes: item.likes + 1,
+      });
+    firestore()
+      .collection('Users')
+      .doc(userId)
+      .onSnapshot(documentSnapshot => {
+        settag(documentSnapshot.data().tags);
+        console.log('ho');
+        setusertrigger(!usetrigger);
+      });
+    // console.log('tegs', tag);
+    // const newTag = [...item.hashtags, ...tag];
+    // console.log('alltags', newTag);
+    // firestore().collection('Users').doc(userId).update({
+    //   tags: newTag,
+    // });
+  };
+  const disliked = item => {
+    console.log('disssss', item);
+    firestore()
+      .collection('Article')
+      .doc(item.key)
+      .update({
+        dislikes: item.dislikes + 1,
+      });
+  };
+  useEffect(() => {
+    console.log('in use effect');
+    if (tag.length > 0) {
+      const newTag = [...userKey.hashtags, ...tag];
+      // console.log('alltags', newTag);
+      firestore().collection('Users').doc(userId).update({
+        tags: newTag,
+      });
+    }
+  }, [usetrigger]);
+  console.log(usetrigger);
   useEffect(() => {
     console.log('helllllll');
-    if (load ===false){
-
+    if (load === false) {
       fetch('http://10.0.2.2:5000/', {
-
         method: 'POST',
         headers: {
           //   'Accept': 'application/json',
@@ -38,18 +85,13 @@ const ArcList = ({navigation}) => {
         }),
       })
         .then(response => response.json())
-        .then(json =>
-  
-          {
-            console.log(json);
-          },
-        );
+        .then(json => {
+          console.log(json);
+        });
     }
-    
-
   }, [load]);
   useEffect(() => {
-    console.log("pehle hua");
+    console.log('pehle hua');
     const art = firestore()
       .collection('Article')
       .get()
@@ -71,7 +113,7 @@ const ArcList = ({navigation}) => {
         setLoad(false);
       });
     return () => art;
-  },[]);
+  }, []);
   if (load) {
     return <ActivityIndicator />;
   }
@@ -96,8 +138,12 @@ const ArcList = ({navigation}) => {
               </View>
             </View>
             <View>
-            <Button title="Like" color="green" />
-              <Button title="Dislike" color="red" />
+              <Button title="Like" color="green" onPress={() => liked(item)} />
+              <Button
+                title="Dislike"
+                color="red"
+                onPress={() => disliked(item)}
+              />
             </View>
           </TouchableOpacity>
         )}
