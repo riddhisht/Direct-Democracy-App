@@ -51,7 +51,7 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
       <Text style = {styles.content}>{cost}</Text>
 
       { status==='Active' &&
-        <Button title="vote" color="black" onPress={()=>navigation.navigate("billvoting", {'title':title,'username':username,
+        <Button title={userId} color="black" onPress={()=>navigation.navigate("billvoting", {'title':title,'username':username,
                                                      'upvotes':upvotes,"downvotes":downvotes,
                                                      'bill_no':bill_no,"key":key,
                                                      'userId':userId})}/>
@@ -59,7 +59,7 @@ import { StyleSheet, Text, View,Button,TextInput,ScrollView,FlatList,
 
       <Text>{"\n"}</Text>
 
-      <Button title="Check Articles"  onPress={()=>navigation.navigate("ArcList")}/>
+      <Button title="Check Articles"  onPress={()=>navigation.navigate("ArcList", {'userID':userId})}/>
       <Text>{"\n \n"}</Text>
 
       

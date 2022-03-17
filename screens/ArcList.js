@@ -16,13 +16,20 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ActivityIndicator} from 'react-native';
-const ArcList = ({navigation}) => {
+
+
+const ArcList = ({navigation, route}) => {
+
+  const userId = route.params.userId;
+
   const [dat, setDat] = useState([]);
   const [load, setLoad] = useState(true);
+  const [tags, setTags] = useState([]);
+  const [updated, setUpdated] = useState([])
 
   useEffect(() => {
     console.log('helllllll');
-    if (load ===false){
+    if (tags != []){
 
       fetch('http://10.0.2.2:5000/', {
 
@@ -35,21 +42,29 @@ const ArcList = ({navigation}) => {
           name: 'John',
           password: 'John123',
           data: dat,
+          utags: tags
         }),
       })
         .then(response => response.json())
         .then(json =>
   
           {
-            console.log(json);
+            //console.log("returned data: " + json);
+            setUpdated(json)
+          
+            console.log(updated)
+            setLoad(false);
+
+
           },
         );
-    }
+        
+      }
     
 
-  }, [load]);
+  }, [load, tags]);
   useEffect(() => {
-    console.log("pehle hua");
+    console.log(userId);
     const art = firestore()
       .collection('Article')
       .get()
@@ -68,7 +83,16 @@ const ArcList = ({navigation}) => {
         });
 
         setDat(bills);
-        setLoad(false);
+      
+        firestore()
+        .collection('Users')
+        .doc(userId)
+        .onSnapshot(documentSnapshot => {
+          setTags(documentSnapshot.data().tags)
+          //console.log('User data: ',tags);
+        });
+        console.log('User data: ',tags);
+        
       });
     return () => art;
   },[]);
@@ -78,8 +102,10 @@ const ArcList = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+    <Text style={styles.title}>Hello
+      {tags}</Text>
       <FlatList
-        data={dat}
+        data={updated}
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
@@ -123,7 +149,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 0,
     height: 160,
-    //marginLeft:20
+
   },
   text: {
     fontWeight: 'bold',
