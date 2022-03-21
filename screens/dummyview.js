@@ -27,7 +27,7 @@ const DummyView = ({navigation, route}) => {
       .collection('Bills')
       .get()
       .then(collectionSnapshot => {
-        const bills = [];
+        var bills = [];
         collectionSnapshot.forEach(documentSnapshot => {
           //console.log('User ID: ', documentSnapshot.id,documentSnapshot.data().number,documentSnapshot.data().title);
 
@@ -45,7 +45,7 @@ const DummyView = ({navigation, route}) => {
             summary: documentSnapshot.data().summary,
             cost: documentSnapshot.data().cost,
             downvotes: documentSnapshot.data()['total downvotes'],
-            status: documentSnapshot.data()['status'],
+            status: documentSnapshot.data().status,
             upvotes: documentSnapshot.data()['total upvotes'],
           });
         });
@@ -53,7 +53,7 @@ const DummyView = ({navigation, route}) => {
         setloading(false);
       });
     return () => subscriber;
-  });
+  }, []);
 
   //  console.log("hey",dat);
 
@@ -63,11 +63,22 @@ const DummyView = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <Button
-        title="PrevBills"
-        style={styles.butt}
-        onPress={() => navigation.navigate('PreviousBills')}
-      />
+      <View style={styles.buttonContainer}>
+        <View style={styles.appButtonContainer1}>
+          <Text
+            onPress={() => navigation.navigate('PreviousBills')}
+            style={styles.appButtonText}>
+            Previous Bills
+          </Text>
+        </View>
+        <View style={styles.appButtonContainer2}>
+          <Text
+            onPress={() => navigation.navigate('Bill Proposal')}
+            style={styles.appButtonText}>
+            Propose New Bill
+          </Text>
+        </View>
+      </View>
       <FlatList
         data={dat}
         renderItem={({item}) => (
@@ -81,26 +92,19 @@ const DummyView = ({navigation, route}) => {
               })
             }>
             <View style={styles.listitem}>
-              <View>
-                <Text style={styles.title}>Title: {item.title}</Text>
+              <View style={styles.topPart}>
+                <Text style={styles.title}>{item.title}</Text>
 
-                <Text style={styles.number}>
-                  Bill Number: {item.number} {'\n'}
-                  Voting ends on {period} {'\n'}
-                  <Text>upvotes:{item.upvotes}</Text> {'\n'}
-                  <Text>downvotes:{item.downvotes}</Text>
-                  <Text>key:{item.key}</Text>
+                <Text style={styles.number} color="white">
+                  Bill Number: {item.number}{' '}
                 </Text>
+                <Text> {item.preamble}</Text>
+
+                <Text>Due {period}</Text>
               </View>
-              <View style={styles.avatar}>
-                <Avatar
-                  size="large"
-                  rounded
-                  source={{
-                    uri: 'https://media.vanityfair.com/photos/5cae5ea3f038af13baee9656/1:1/w_1332,h_1332,c_limit/jane-the-virgin-season-5-michael-memories-twist-raphael.jpg',
-                  }}
-                />
-                <Text>Jane Doe</Text>
+              <View style={styles.bottomCard}>
+                <Button title="Comments" color="green" />
+                <Button title="Bookmark" color="white" />
               </View>
             </View>
           </TouchableOpacity>
@@ -114,19 +118,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    color: 'black',
     backgroundColor: 'black',
   },
   listitem: {
-    flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
-    borderWidth: 3,
-    borderColor: 'brown',
-    padding: 10,
-    marginTop: 10,
-    borderRadius: 0,
-    height: 160,
+    borderRadius: 22,
+    marginTop: 25,
+    height: 200,
+    width: '100%',
     //marginLeft:20
   },
   text: {
@@ -149,10 +149,52 @@ const styles = StyleSheet.create({
   avatar: {
     paddingLeft: 50,
   },
-  butt: {
-    position: 'absolute',
-    right: 5,
-    top: 5,
+  appButtonContainer1: {
+    elevation: 8,
+    backgroundColor: 'grey',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: 170,
+    marginRight: 20,
+    marginLeft: 10,
+    marginTop: 20,
+  },
+  appButtonContainer2: {
+    elevation: 8,
+    backgroundColor: 'blue',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: 170,
+    marginRight: 20,
+    marginLeft: 10,
+    marginTop: 20,
+  },
+  appButtonText: {
+    fontSize: 15,
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  topPart: {
+    backgroundColor: '#537A5A',
+    height: 160,
+    width: '100%',
+    // borderBottomLeftRadius: number,
+    // borderBottomRightRadius: number,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+    color: 'white',
+  },
+  bottomCard: {
+    flexDirection: 'row',
+    top: 150,
+    left: 200,
   },
 });
 export default DummyView;
