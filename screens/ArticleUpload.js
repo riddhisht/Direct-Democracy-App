@@ -22,7 +22,7 @@ const ArticleUp = ({navigation, route}) => {
   const [likes, setlikes] = useState(0);
   const [dislikes, setdislikes] = useState(0);
   //   const uname = route.params.name;
-  const uname = 'route.params.name';
+  const uname = route.params.name;
 
   const article = {
     title: title,

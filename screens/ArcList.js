@@ -82,6 +82,7 @@ const ArcList = ({navigation, route}) => {
           name: 'John',
           password: 'John123',
           data: dat,
+          utags: tags,
         }),
       })
         .then(response => response.json())
@@ -110,7 +111,15 @@ const ArcList = ({navigation, route}) => {
         });
 
         setDat(bills);
-        setLoad(false);
+
+        firestore()
+          .collection('Users')
+          .doc(userId)
+          .onSnapshot(documentSnapshot => {
+            setTags(documentSnapshot.data().tags);
+            //console.log('User data: ',tags);
+          });
+        console.log('User data: ', tags);
       });
     return () => art;
   }, []);
@@ -120,8 +129,12 @@ const ArcList = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>
+        Hello
+        {tags}
+      </Text>
       <FlatList
-        data={dat}
+        data={updated}
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
@@ -169,7 +182,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 0,
     height: 160,
-    //marginLeft:20
   },
   text: {
     fontWeight: 'bold',
