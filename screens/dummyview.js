@@ -98,8 +98,6 @@ const DummyView = ({navigation, route}) => {
                 <Text style={styles.number} color="white">
                   Bill Number: {item.number}{' '}
                 </Text>
-                <Text> {item.preamble}</Text>
-
                 <Text>Due {period}</Text>
               </View>
               <View style={styles.bottomCard}>

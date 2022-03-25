@@ -1,85 +1,80 @@
 import {Button, ThemeProvider, Avatar} from 'react-native-elements';
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {
   StyleSheet,
   Text,
   View,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 function Profile() {
-  const name="manav";
+  const name = 'manav';
   const [toggleState, setToggleState] = useState(1);
   const [articles, setarticles] = useState([]);
   const [bills, setbills] = useState([]);
-  const [data,setdata]=useState([]);
-  const [loading,setloading]=useState(true);
+  const [data, setdata] = useState([]);
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
-  const subscriber=firestore()
-  .collection('Article')
-  // Filter results
-  .where('uname', '==', name)
-  .get()
-  .then(querySnapshot => {
-    console.log(querySnapshot);
-    ar = [];
-    querySnapshot.forEach(documentSnapshot => {
-      console.log(documentSnapshot.id,documentSnapshot.data());
-      ar.push({
-        key: documentSnapshot.id,
-        title: documentSnapshot.data().title,
-        data: documentSnapshot.data().data,
-        likes: documentSnapshot.data().likes,
-        dislikes: documentSnapshot.data().dislikes,
-        hashtags: documentSnapshot.data().hashtags,
-        uname: documentSnapshot.data().uname,
-      });
-    
-    
-  });
-  // bill fetching
-  
-  setarticles(ar);
-  setloading(false);
-});
-const sub2=firestore()
-  .collection('Bills')
-  // Filter results
-  .where('name', '==', name)
-  .get()
-  .then(querySnapshot => {
-    console.log(querySnapshot);
-    const big = [];
-    querySnapshot.forEach(documentSnapshot => {
-      console.log(documentSnapshot.id,documentSnapshot.data());
-      big.push({
-        key: documentSnapshot.id,
-        title: documentSnapshot.data().title,
-        upvotes: documentSnapshot.data()["total downvotes"],
-        downvotes: documentSnapshot.data()["total upvotes"],
-        uname: documentSnapshot.data().name,
-      });
-    
-    
-  });
-  // bill fetching
-  
-  setbills(big);
-});
+    const subscriber = firestore()
+      .collection('Article')
+      // Filter results
+      .where('uname', '==', name)
+      .get()
+      .then(querySnapshot => {
+        console.log(querySnapshot);
+        ar = [];
+        querySnapshot.forEach(documentSnapshot => {
+          console.log(documentSnapshot.id, documentSnapshot.data());
+          ar.push({
+            key: documentSnapshot.id,
+            title: documentSnapshot.data().title,
+            data: documentSnapshot.data().data,
+            likes: documentSnapshot.data().likes,
+            dislikes: documentSnapshot.data().dislikes,
+            hashtags: documentSnapshot.data().hashtags,
+            uname: documentSnapshot.data().uname,
+          });
+        });
+        // bill fetching
 
-  
-    return () => [subscriber,sub2];
-  }, [])
-  
+        setarticles(ar);
+        setloading(false);
+      });
+    const sub2 = firestore()
+      .collection('Bills')
+      // Filter results
+      .where('name', '==', name)
+      .get()
+      .then(querySnapshot => {
+        console.log(querySnapshot);
+        const big = [];
+        querySnapshot.forEach(documentSnapshot => {
+          console.log(documentSnapshot.id, documentSnapshot.data());
+          big.push({
+            key: documentSnapshot.id,
+            title: documentSnapshot.data().title,
+            upvotes: documentSnapshot.data()['total downvotes'],
+            downvotes: documentSnapshot.data()['total upvotes'],
+            uname: documentSnapshot.data().name,
+          });
+        });
+        // bill fetching
+
+        setbills(big);
+      });
+
+    return () => [subscriber, sub2];
+  }, []);
+
   const toggleTab = index => {
     setToggleState(index);
   };
   console.log(toggleState);
-  if( loading){
-    return <ActivityIndicator/>
+  if (loading) {
+    return <ActivityIndicator />;
   }
 
   return (
@@ -106,38 +101,35 @@ const sub2=firestore()
         <View>
           <Button
             style={toggleState === 1 ? styles.visible : styles.notVisible}
-            onPress={() => {setToggleState(1);
-            setdata(articles)
+            onPress={() => {
+              setToggleState(1);
+              setdata(articles);
             }}
-            title="One"
+            title="Articles"
+            color="Black"
           />
         </View>
         <View>
           <Button
             style={toggleState === 2 ? styles.visible : styles.notVisible}
-            onPress={() => {setToggleState(2);
-            setdata(bills);
+            onPress={() => {
+              setToggleState(2);
+              setdata(bills);
             }}
-            title="Two"
+            title="Bills"
+            color="black"
           />
         </View>
         <View>
           <Button
             style={toggleState === 3 ? styles.visible : styles.notVisible}
             onPress={() => setToggleState(3)}
-            title="Three"
-          />
-        </View>
-        <View>
-          <Button
-            style={toggleState === 4 ? styles.visible : styles.notVisible}
-            onPress={() => setToggleState(4)}
-            title="Four"
+            title="Profile"
+            color="black"
           />
         </View>
       </View>
       <View style={styles.feed}>
-      
         <FlatList
           data={data}
           renderItem={({item}) => {
@@ -160,12 +152,6 @@ const sub2=firestore()
                     toggleState === 3 ? styles.visible : styles.notVisible
                   }>
                   <Text>What's 3</Text>
-                </View>
-                <View
-                  style={
-                    toggleState === 4 ? styles.visible : styles.notVisible
-                  }>
-                  <Text>Up 4</Text>
                 </View>
               </View>
             );
@@ -195,7 +181,7 @@ const styles = StyleSheet.create({
   },
   notVisible: {
     display: 'none',
-},
+  },
   options: {
     flex: 1,
     flexDirection: 'row',

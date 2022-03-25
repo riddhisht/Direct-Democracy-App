@@ -74,28 +74,7 @@ const ViewBill = ({route, navigation}) => {
         />
       )}
 
-<<<<<<< HEAD
       <Text>{'\n'}</Text>
-=======
-      { status==='Active' &&
-        <Button title={userId} color="black" onPress={()=>navigation.navigate("billvoting", {'title':title,'username':username,
-                                                     'upvotes':upvotes,"downvotes":downvotes,
-                                                     'bill_no':bill_no,"key":key,
-                                                     'userId':userId})}/>
-      }
-
-      <Text>{"\n"}</Text>
-
-      <Button title="Check Articles"  onPress={()=>navigation.navigate("ArcList", {'userID':userId})}/>
-      <Text>{"\n \n"}</Text>
-
-      
-      </ScrollView>
-        
-    );
-
-  }
->>>>>>> 732c20a9c94eeb1c6c485b6d6e6a452f46fdcc08
 
       <Button
         title="Check Articles"

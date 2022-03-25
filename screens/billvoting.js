@@ -37,7 +37,7 @@ const billvoting = ({route}) => {
           console.log(voted);
         }
       });
-  }, []);
+  }, [key]);
 
   var upvotes = route.params.upvotes;
   var downvotes = route.params.downvotes;

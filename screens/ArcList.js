@@ -20,9 +20,10 @@ import {ActivityIndicator} from 'react-native';
 const ArcList = ({navigation, route}) => {
   const [dat, setDat] = useState([]);
   const [load, setLoad] = useState(true);
-  const [tag, settag] = useState([]);
+  const [tags, setTags] = useState([]);
   const [userKey, setUserKey] = useState({});
   const [usetrigger, setusertrigger] = useState(true);
+  const [updated, setUpdated] = useState();
   const userId = route.params.userId;
 
   const liked = item => {
@@ -38,16 +39,10 @@ const ArcList = ({navigation, route}) => {
       .collection('Users')
       .doc(userId)
       .onSnapshot(documentSnapshot => {
-        settag(documentSnapshot.data().tags);
+        setTags(documentSnapshot.data().tags);
         console.log('ho');
         setusertrigger(!usetrigger);
       });
-    // console.log('tegs', tag);
-    // const newTag = [...item.hashtags, ...tag];
-    // console.log('alltags', newTag);
-    // firestore().collection('Users').doc(userId).update({
-    //   tags: newTag,
-    // });
   };
   const disliked = item => {
     console.log('disssss', item);
@@ -60,9 +55,9 @@ const ArcList = ({navigation, route}) => {
   };
   useEffect(() => {
     console.log('in use effect');
-    if (tag.length > 0) {
+    if (tags.length > 0) {
       const newTag = [...userKey.hashtags, ...tag];
-      // console.log('alltags', newTag);
+      console.log('alltags', newTag);
       firestore().collection('Users').doc(userId).update({
         tags: newTag,
       });
@@ -71,7 +66,7 @@ const ArcList = ({navigation, route}) => {
   console.log(usetrigger);
   useEffect(() => {
     console.log('helllllll');
-    if (load === false) {
+    if (tags !== []) {
       fetch('http://10.0.2.2:5000/', {
         method: 'POST',
         headers: {
@@ -88,9 +83,11 @@ const ArcList = ({navigation, route}) => {
         .then(response => response.json())
         .then(json => {
           console.log(json);
+          setUpdated(json);
+          setLoad(false);
         });
     }
-  }, [load]);
+  }, [load, tags]);
   useEffect(() => {
     console.log('pehle hua');
     const art = firestore()
@@ -122,7 +119,7 @@ const ArcList = ({navigation, route}) => {
         console.log('User data: ', tags);
       });
     return () => art;
-  }, []);
+  }, [load]);
   if (load) {
     return <ActivityIndicator />;
   }
