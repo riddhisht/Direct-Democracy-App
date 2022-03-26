@@ -21,35 +21,70 @@ const DummyView = ({navigation, route}) => {
   const userId = route.params.userId;
   const [period, setPeriod] = useState('21/2/21');
   const [dat, setDat] = useState([]);
+  const [expiredBillsData, setExpiredBillsData] = useState([]);
   const [loading, setloading] = useState(true);
+
   useEffect(() => {
+    const currentDate = new Date().getDate();
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
     const subscriber = firestore()
       .collection('Bills')
       .get()
       .then(collectionSnapshot => {
         var bills = [];
+        var expiredBills = [];
         collectionSnapshot.forEach(documentSnapshot => {
           //console.log('User ID: ', documentSnapshot.id,documentSnapshot.data().number,documentSnapshot.data().title);
-
-          bills.push({
-            key: documentSnapshot.id,
-            number: documentSnapshot.data().number,
-            title: documentSnapshot.data().title,
-            preamble: documentSnapshot.data().preamble,
-            enactingClause: documentSnapshot.data().enactingClause,
-            clause: documentSnapshot.data().clause,
-            interpretationProvision:
-              documentSnapshot.data().interpretationProvision,
-            comingIntoForceProvision:
-              documentSnapshot.data().comingIntoForceProvision,
-            summary: documentSnapshot.data().summary,
-            cost: documentSnapshot.data().cost,
-            downvotes: documentSnapshot.data()['total downvotes'],
-            status: documentSnapshot.data().status,
-            upvotes: documentSnapshot.data()['total upvotes'],
-          });
+          var sfd = documentSnapshot.data().dueDate;
+          if (
+            currentMonth <= sfd[1] &&
+            currentDate <= sfd[0] &&
+            currentYear <= sfd[2]
+          ) {
+            console.log('true');
+            bills.push({
+              key: documentSnapshot.id,
+              number: documentSnapshot.data().number,
+              title: documentSnapshot.data().title,
+              preamble: documentSnapshot.data().preamble,
+              enactingClause: documentSnapshot.data().enactingClause,
+              clause: documentSnapshot.data().clause,
+              interpretationProvision:
+                documentSnapshot.data().interpretationProvision,
+              comingIntoForceProvision:
+                documentSnapshot.data().comingIntoForceProvision,
+              summary: documentSnapshot.data().summary,
+              cost: documentSnapshot.data().cost,
+              downvotes: documentSnapshot.data()['total downvotes'],
+              status: documentSnapshot.data().status,
+              upvotes: documentSnapshot.data()['total upvotes'],
+              dueDate: documentSnapshot.data().dueDate,
+            });
+            setDat(bills);
+          } else {
+            console.log('false');
+            expiredBills.push({
+              key: documentSnapshot.id,
+              number: documentSnapshot.data().number,
+              title: documentSnapshot.data().title,
+              preamble: documentSnapshot.data().preamble,
+              enactingClause: documentSnapshot.data().enactingClause,
+              clause: documentSnapshot.data().clause,
+              interpretationProvision:
+                documentSnapshot.data().interpretationProvision,
+              comingIntoForceProvision:
+                documentSnapshot.data().comingIntoForceProvision,
+              summary: documentSnapshot.data().summary,
+              cost: documentSnapshot.data().cost,
+              downvotes: documentSnapshot.data()['total downvotes'],
+              status: documentSnapshot.data().status,
+              upvotes: documentSnapshot.data()['total upvotes'],
+              dueDate: documentSnapshot.data().dueDate,
+            });
+            setExpiredBillsData(expiredBills);
+          }
         });
-        setDat(bills);
         setloading(false);
       });
     return () => subscriber;
@@ -66,7 +101,11 @@ const DummyView = ({navigation, route}) => {
       <View style={styles.buttonContainer}>
         <View style={styles.appButtonContainer1}>
           <Text
-            onPress={() => navigation.navigate('PreviousBills')}
+            onPress={() =>
+              navigation.navigate('PreviousBills', {
+                data: expiredBillsData,
+              })
+            }
             style={styles.appButtonText}>
             Previous Bills
           </Text>
@@ -98,12 +137,11 @@ const DummyView = ({navigation, route}) => {
                 <Text style={styles.number} color="white">
                   Bill Number: {item.number}{' '}
                 </Text>
-                <Text>Due {period}</Text>
+                <Text style={styles.endDate}>Due {period}</Text>
               </View>
-              <View style={styles.bottomCard}>
-                <Button title="Comments" color="green" />
-                <Button title="Bookmark" color="white" />
-              </View>
+              {/* <View style={styles.bottomCard}>
+                <Text>Comments</Text>
+              </View> */}
             </View>
           </TouchableOpacity>
         )}
@@ -123,8 +161,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 22,
     marginTop: 25,
-    height: 200,
+    height: 160,
     width: '100%',
+    color: 'white',
     //marginLeft:20
   },
   text: {
@@ -134,15 +173,16 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   title: {
-    //flex:1,
-    color: 'black',
-    fontSize: 25,
+    color: 'white',
+    fontSize: 22,
     fontWeight: 'bold',
+    padding: 10,
   },
   number: {
-    paddingTop: 7,
-    color: 'black',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 18,
+    fontStyle: 'italic',
+    marginLeft: 10,
   },
   avatar: {
     paddingLeft: 50,
@@ -169,6 +209,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 20,
   },
+  endDate: {
+    position: 'absolute',
+    left: 275,
+    fontSize: 18,
+    top: 125,
+    color: 'white',
+  },
   appButtonText: {
     fontSize: 15,
     color: '#fff',
@@ -185,13 +232,12 @@ const styles = StyleSheet.create({
     width: '100%',
     // borderBottomLeftRadius: number,
     // borderBottomRightRadius: number,
-    borderTopLeftRadius: 22,
-    borderTopRightRadius: 22,
+    borderRadius: 20,
     color: 'white',
   },
   bottomCard: {
     flexDirection: 'row',
-    top: 150,
+    top: 350,
     left: 200,
   },
 });
