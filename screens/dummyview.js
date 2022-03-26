@@ -23,6 +23,26 @@ const DummyView = ({navigation, route}) => {
   const [dat, setDat] = useState([]);
   const [expiredBillsData, setExpiredBillsData] = useState([]);
   const [loading, setloading] = useState(true);
+  const [filterDat, setFilterDat] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+  const searchFilter = (text) =>{
+      
+    if (text){
+      const newData = dat.filter((item)=>{
+        const itemData = item.title ? item.title.toUpperCase() : "".toUpperCase()
+        const itemData2 =  item.preamble? item.preamble.toUpperCase() : "".toUpperCase();
+
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) >-1 || itemData2.indexOf(textData)>-1;
+      });
+      setFilterDat(newData);
+      setSearchText(text);
+    } else {
+      setFilterDat(dat);
+      setSearchText(text);
+    }
+  }
 
   useEffect(() => {
     const currentDate = new Date().getDate();
@@ -61,6 +81,7 @@ const DummyView = ({navigation, route}) => {
               upvotes: documentSnapshot.data()['total upvotes'],
               dueDate: documentSnapshot.data().dueDate,
             });
+            setFilterDat(bills);
             setDat(bills);
           } else {
             console.log('false');
@@ -109,6 +130,7 @@ const DummyView = ({navigation, route}) => {
             style={styles.appButtonText}>
             Previous Bills
           </Text>
+
         </View>
         <View style={styles.appButtonContainer2}>
           <Text
@@ -118,8 +140,13 @@ const DummyView = ({navigation, route}) => {
           </Text>
         </View>
       </View>
+      <TextInput
+          placeholder='search bills'
+          value={searchText}
+          onChangeText={(text)=> searchFilter(text)}
+        />
       <FlatList
-        data={dat}
+        data={filterDat}
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
@@ -154,7 +181,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
   },
   listitem: {
     flexDirection: 'row',
