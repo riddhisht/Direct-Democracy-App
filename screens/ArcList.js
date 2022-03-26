@@ -23,8 +23,35 @@ const ArcList = ({navigation, route}) => {
   const [dat, setDat] = useState([]);
   const [load, setLoad] = useState(true);
   const [tags, setTags] = useState([]);
+  const [userKey, setUserKey] = useState({});
   const [updated, setUpdated] = useState([]);
-
+  const liked = item => {
+    console.log('likedd', item);
+    setUserKey(item);
+    firestore()
+      .collection('Article')
+      .doc(item.key)
+      .update({
+        likes: item.likes + 1,
+      });
+    // firestore()
+    //   .collection('Users')
+    //   .doc(userId)
+    //   .onSnapshot(documentSnapshot => {
+    //     setTags(documentSnapshot.data().tags);
+    //     console.log('ho');
+    //     setusertrigger(!usetrigger);
+    //   });
+  };
+  const disliked = item => {
+    console.log('disssss', item);
+    firestore()
+      .collection('Article')
+      .doc(item.key)
+      .update({
+        dislikes: item.dislikes + 1,
+      });
+  };
   useEffect(() => {
     console.log('helllllll');
     if (tags !== []) {
@@ -111,8 +138,12 @@ const ArcList = ({navigation, route}) => {
               </View>
             </View>
             <View>
-              <Button title="Like" color="green" />
-              <Button title="Dislike" color="red" />
+              <Button title="Like" color="green" onPress={() => liked(item)} />
+              <Button
+                title="Dislike"
+                color="red"
+                onPress={() => disliked(item)}
+              />
             </View>
           </TouchableOpacity>
         )}
