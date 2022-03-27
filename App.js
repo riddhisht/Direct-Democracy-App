@@ -11,6 +11,8 @@ import ViewBill from './screens/billview';
 import billvoting from './screens/billvoting';
 import Homepage from './screens/Hompage';
 import PreviousBills from './screens/PreviousBills';
+import AdminLoginScreen from './screens/Adminlogin';
+import AdminPage from './screens/AdminPage';
 import {ScreenStackHeaderLeftView} from 'react-native-screens';
 import ArcList from './screens/ArcList';
 import ArticleView from './screens/ArticleView';
@@ -24,6 +26,8 @@ const Tabs = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="AdminLogin" component={AdminLoginScreen} />
+      <Stack.Screen name="AdminPage" component={AdminPage} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Homepage" component={Homepage} />
       <Stack.Screen
@@ -57,7 +61,7 @@ const App = () => {
         <Tab.Screen name="Tabs" component={Tabs} />
         <Tab.Screen name="Login" component={LoginScreen} />
         <Tab.Screen name="Signup" component={SignupScreen} />
-        <Tab.Screen name="Bill Proposal" component={BillProposal} />
+        <Tab.Screen name="AdminLogin" component={AdminLoginScreen} />
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
