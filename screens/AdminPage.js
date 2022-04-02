@@ -66,7 +66,7 @@ const AdminPage = ({navigation})=>{
     }
     const edit = (item) =>{
         //write what happens after edit
-        navigation.navigate('Bill Proposal')
+        navigation.navigate('Bill Proposal',{name:username})
     }
     if(loading){
         return <ActivityIndicator />;

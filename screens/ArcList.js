@@ -8,13 +8,9 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  TouchableOpacity,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
+  TouchableOpacity
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ActivityIndicator} from 'react-native';
 
 const ArcList = ({navigation, route}) => {
@@ -42,6 +38,15 @@ const ArcList = ({navigation, route}) => {
     //     console.log('ho');
     //     setusertrigger(!usetrigger);
     //   });
+    item.hashtags.map((tag)=>{
+      firestore()
+      .collection('Users')
+      .doc(userId)
+      .update({
+        tags:firestore.FieldValue.arrayUnion(tag)
+      });
+    }
+    )
   };
   const disliked = item => {
     console.log('disssss', item);
