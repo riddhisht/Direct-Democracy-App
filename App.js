@@ -19,6 +19,7 @@ import ArticleView from './screens/ArticleView';
 // import Tabs from './navigation/tabNavigation';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ArticleUp from './screens/ArticleUpload';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
