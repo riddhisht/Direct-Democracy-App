@@ -4,7 +4,7 @@ from better_profanity import profanity
 
 app = Flask(__name__)
 
-@app.route("/sen", methods=['GET','POST'])
+@app.route("/", methods=['GET','POST'])
 def send():
     if request.method=='POST':
         a = request.get_json()
