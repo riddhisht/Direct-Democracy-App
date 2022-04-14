@@ -19,7 +19,7 @@ import ArticleView from './screens/ArticleView';
 // import Tabs from './navigation/tabNavigation';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ArticleUp from './screens/ArticleUpload';
-
+import billArticles from './screens/billArticles';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -52,6 +52,8 @@ const Tabs = () => {
       <Stack.Screen name="ArticleView" component={ArticleView} />
       <Stack.Screen name="ArticleUp" component={ArticleUp} />
       <Stack.Screen name="PreviousBills" component={PreviousBills} />
+      <Stack.Screen name="billArticles" component={billArticles} />
+
     </Stack.Navigator>
   );
 };

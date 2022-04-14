@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify
+from better_profanity import profanity
 
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET','POST'])
+@app.route("/sen", methods=['GET','POST'])
 def send():
     if request.method=='POST':
         a = request.get_json()
+
+
         # t = a['password'] + "hello ji hello"
         print("-------------------------------")
         if a['utags']!= []:
@@ -61,16 +64,35 @@ def send():
         #----------------------ALGORITHM---------------------------------------------------------
         
         
-        for i in matrix:
-            print(i)
-            print("next object")
+    #     for i in matrix:
+    #         print(i)
+    #         print("next object")
 
-        print(a['data'][1])
-        return jsonify(a['data'][1])
+    #     print(a['data'][1])
+    #     return jsonify(a['data'][1])
 
 
-    else: 
-        return jsonify({"Hello": 'world', "Namaste":"Duniya", "working": True})
+    # else: 
+    #     return jsonify({"Hello": 'world', "Namaste":"Duniya", "working": True})
+
+
+# @app.route("/filter", methods=['GET','POST'])
+# def __init__():
+#     if request.method=='POST':
+#         a = request.get_json()
+#         # t = a['password'] + "hello ji hello"
+#         t = profanity.contains_profanity(a['data'])
+#         print(t)
+#         if t==True:
+
+#             return jsonify('True')
+#         else:
+#             return jsonify('False')
+
+            
+#     else: 
+#         return jsonify({"Hello": 'world', "Namaste":"Duniya", "working": True})
+
 
 
 

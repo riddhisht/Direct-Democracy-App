@@ -16,50 +16,84 @@ import {Avatar} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 import {ActivityIndicator} from 'react-native';
 
-const PreviousBills = ({navigation, route}) => {
-  const data = route.params.data;
-  console.log(data);
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
+const billArticles = ({navigation, route}) => {
+  const articleIDs = route.params.articleIDs
+  const [dat,setDat] = useState([])
+
+
+  
+useEffect(()=>{
+
+    var articles=[]
+    
+    articleIDs.forEach(pushFunction)
+    
+    function pushFunction(value, index, array){
+        console.log("dcoum ids, ",value)
+        
+        firestore()
+        .collection("Article")
+        .doc(value)
+        .onSnapshot(documentSnapshot=>{
+            console.log("document  ", documentSnapshot.data().title)
+            articles.push({
+                'title': documentSnapshot.data().title,
+                'key': documentSnapshot.id,
+                "hashtags": documentSnapshot.data().hashtags
+            })
+            setDat(articles)
+
+        })
+        
+    
+    }
+    //setDat(articles)
+    
+    console.log("articles", dat)
+    
+    
+    },[])
+  return(
+
+    <FlatList
+        data={dat}
         renderItem={({item}) => (
           // return a component using that data
-          // <TouchableOpacity
-          //   onPress={() =>
-          //     navigation.navigate('ViewBill', {
-          //       data: item,
-          //       username: username,
-          //       userId: userId,
-          //     })
-          //   }>
           <TouchableOpacity
-          onPress={() => navigation.navigate('ViewBill', {data: item})}>
-          <View style={styles.listitem}>
-            <View style={styles.topPart}>
-              <Text style={styles.title}>{item.title}</Text>
+            // onPress={() =>
+            //   navigation.navigate('ViewBill', {
+            //     data: item,
+            //     username: username,
+            //     userId: userId,
+            //   })
+            >
+            <View style={styles.listitem}>
+              <View style={styles.topPart}>
+                <Text style={styles.title}>{item.title}</Text>
 
-              <Text style={styles.number} color="white">
-                Bill Number: {item.number}{' '}
-              </Text>
-              <Text style={styles.endDate}>Due </Text>
+                <Text style={styles.number} color="white">
+                 Hashtags: {item.hashtags}{' '}
+                </Text>
+              </View>
+              {/* <View style={styles.bottomCard}>
+                <Text>Comments</Text>
+              </View> */}
             </View>
-            {/* <View style={styles.bottomCard}>
-            <Text>Comments</Text>
-          </View> */}
-          </View>
           </TouchableOpacity>
         )}
       />
-    </View>
-  );
+)
 };
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
   },
   listitem: {
     flexDirection: 'row',
@@ -146,4 +180,4 @@ const styles = StyleSheet.create({
     left: 200,
   },
 });
-export default PreviousBills;
+export default billArticles;

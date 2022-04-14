@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -21,9 +21,16 @@ const ArticleUp = ({navigation, route}) => {
   const [hashtags, sethashtags] = useState([]);
   const [likes, setlikes] = useState(0);
   const [dislikes, setdislikes] = useState(0);
-  //   const uname = route.params.name;
-  const uname = route.params.name;
+  const [filter, setFilter] = useState();
+  const [tog, setTog] = useState('');
+  const [arts, setArts] = useState([]);
 
+
+
+  //   const uname = route.params.name;
+  const uname = route.params.uname;
+  const billkey = route.params.billkey;
+  const frombill = route.params.frombill;
   const article = {
     title: title,
     data: data,
@@ -31,10 +38,67 @@ const ArticleUp = ({navigation, route}) => {
     likes: likes,
     dislikes: dislikes,
     uname: uname,
+    
   };
 
-  const clickhandler = () => {
-    firestore().collection('Article').add(article);
+
+  // useEffect(() => {
+  //   console.log('effect');
+
+  //   const output = async () =>{
+
+  //     if (tog !== '') {
+  //       fetch('http://10.0.2.2:5000/filter', {
+  //         method: 'POST',
+  //         headers: {
+  //           //   'Accept': 'application/json',
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           //name: 'John',
+  //          // password: 'John123',
+  //           data: article.data,
+  //          // utags: Tags,
+  //         }),
+  //       })
+  //         .then(response => response.json())
+  //         .then(json => {
+  //           //console.log("returned data: " + json);
+  //           setFilter(json);
+  
+  
+  //         });
+  //     return
+  //       }
+
+  //       await output();
+  //   }
+    
+  // }, [tog]);
+  const clickhandler = async () => {
+
+    if (frombill===true) {
+      const newart = await firestore().collection('Article').add(article)
+      console.log("hello ",newart.id)
+  
+  
+  
+      firestore().collection('Bills').doc(billkey).update({
+        // arts: FieldValue.arrayU;nion("newvalueeeeee")
+        arts: firestore.FieldValue.arrayUnion(newart.id)
+      })
+    
+    
+    
+    } else {
+      firestore().collection('Article').add(article)
+      console.log("hello 000000")
+
+
+    }
+    
+
+
   };
 
   return (
@@ -42,7 +106,7 @@ const ArticleUp = ({navigation, route}) => {
       <View style={styles.container}>
         {/* style = { styles.bottom} */}
         <View style={styles.header}>
-          <Text style={styles.headerText}>Article Upload</Text>
+          <Text style={styles.headerText}>Article Upload {billkey}</Text>
         </View>
         <View style={styles.form}>
           <Text style={styles.titles}>Title</Text>

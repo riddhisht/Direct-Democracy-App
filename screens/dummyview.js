@@ -80,6 +80,7 @@ const DummyView = ({navigation, route}) => {
               status: documentSnapshot.data().status,
               upvotes: documentSnapshot.data()['total upvotes'],
               dueDate: documentSnapshot.data().dueDate,
+              arts: documentSnapshot.data().arts
             });
             setFilterDat(bills);
             setDat(bills);
@@ -102,6 +103,7 @@ const DummyView = ({navigation, route}) => {
               status: documentSnapshot.data().status,
               upvotes: documentSnapshot.data()['total upvotes'],
               dueDate: documentSnapshot.data().dueDate,
+              arts: documentSnapshot.data().arts
             });
             setExpiredBillsData(expiredBills);
           }
