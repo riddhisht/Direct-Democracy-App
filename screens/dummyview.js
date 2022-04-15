@@ -154,7 +154,7 @@ const DummyView = ({navigation, route}) => {
         </View>
         <View style={styles.appButtonContainer2}>
           <Text
-            onPress={() => navigation.navigate('Bill Proposal')}
+            onPress={() => navigation.navigate('Bill Proposal',{name:username})}
             style={styles.appButtonText}>
             Propose New Bill
           </Text>

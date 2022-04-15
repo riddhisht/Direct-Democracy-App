@@ -40,7 +40,7 @@ const PreviousBills = ({navigation, route}) => {
                 <Text style={styles.title}>{item.title}</Text>
 
                 <Text style={styles.number} color="white">
-                  Bill Number: {item.number}{' '}
+                  BN: {item.number}{' '}Upvotes{" "}{item.upvotes}{' '}Downvotes: {item.downvotes}
                 </Text>
                 <Text style={styles.endDate}>Status: {item.status} </Text>
               </View>
