@@ -144,22 +144,22 @@ const ArcList = ({navigation, route}) => {
               </View>
             </View>
             <View style={styles.ButtonDistribution}>
-              {/* <Button title="Like" color="green" onPress={() => liked(item)} />
+              <Button title="Like" color="green" onPress={() => liked(item)} />
               <Button
                 title="Dislike"
                 color="red"
                 onPress={() => disliked(item)}
-              /> */}
-              <TouchableOpacity
-                onPress={liked}
+              />
+              {/* <TouchableOpacity
+                onPress={liked(item)}
                 style={styles.appButtonContainer1}>
                 <Text style={styles.buttonText}>Like</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={disliked}
+                onPress={disliked(item)}
                 style={styles.appButtonContainer3}>
                 <Text style={styles.buttonText}>Dislike</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </TouchableOpacity>
         )}

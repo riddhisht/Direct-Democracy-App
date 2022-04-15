@@ -13,7 +13,7 @@ import {
   Keyboard,
 } from 'react-native';
 
-const ViewBill = ({route, navigation}) => {
+const AdminReport = ({route, navigation}) => {
   const title = route.params.data.title;
   const preamble = route.params.data.preamble;
   const enac = route.params.data.enactingClause;
@@ -74,25 +74,6 @@ const ViewBill = ({route, navigation}) => {
           }
         />
       )}
-
-      <Text>{'\n'}</Text>
-
-      <Button
-        title="Check Articles"
-        onPress={() => navigation.navigate('billArticles', {articleIDs: arts})}
-      />
-      <Text>{'\n \n'}</Text>
-      <Button
-        title="Write an article for this bill"
-        onPress={() =>
-          navigation.navigate('ArticleUp', {
-            billkey: key,
-            frombill: true,
-            uname: username,
-          })
-        }
-      />
-      <Text>{'\n \n'}</Text>
     </ScrollView>
   );
 };
@@ -120,4 +101,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-export default ViewBill;
+export default AdminReport;

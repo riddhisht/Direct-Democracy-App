@@ -27,6 +27,9 @@ const LoginScreen = ({navigation}) => {
       .then(response => response.json())
       .then(json => {
         console.log(json);
+      })
+      .catch(err => {
+        console.log(err);
       });
   }, []);
 
@@ -50,19 +53,19 @@ const LoginScreen = ({navigation}) => {
         console.log('User signed in!');
 
         console.log(email);
-      //   fetch('https://fcm.googleapis.com/v1/projects/myproject-b5ae1/messages:send', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     notification:{
-      //       "body":"This is an FCM notification message for login!",
-      //       "title":"FCM login Message"
-      //     }
-      //   }),
-      // })
+        //   fetch('https://fcm.googleapis.com/v1/projects/myproject-b5ae1/messages:send', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     notification:{
+        //       "body":"This is an FCM notification message for login!",
+        //       "title":"FCM login Message"
+        //     }
+        //   }),
+        // })
 
         navigation.replace('Homepage', {email: email});
 
