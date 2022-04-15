@@ -42,7 +42,7 @@ const PreviousBills = ({navigation, route}) => {
                 <Text style={styles.number} color="white">
                   Bill Number: {item.number}{' '}
                 </Text>
-                <Text style={styles.endDate}>Due </Text>
+                <Text style={styles.endDate}>Status: {item.status} </Text>
               </View>
               {/* <View style={styles.bottomCard}>
             <Text>Comments</Text>
@@ -116,10 +116,11 @@ const styles = StyleSheet.create({
   },
   endDate: {
     position: 'absolute',
-    left: 275,
+    left: 255,
     fontSize: 18,
     top: 125,
     color: 'white',
+    fontWeight: '700',
   },
   appButtonText: {
     fontSize: 15,
