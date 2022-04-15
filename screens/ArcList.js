@@ -8,14 +8,14 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {ActivityIndicator} from 'react-native';
 
 const ArcList = ({navigation, route}) => {
   const userId = route.params.userId;
-
+  const namex = route.params.name;
   const [dat, setDat] = useState([]);
   const [load, setLoad] = useState(true);
   const [tags, setTags] = useState([]);
@@ -38,15 +38,14 @@ const ArcList = ({navigation, route}) => {
     //     console.log('ho');
     //     setusertrigger(!usetrigger);
     //   });
-    item.hashtags.map((tag)=>{
+    item.hashtags.map(tag => {
       firestore()
-      .collection('Users')
-      .doc(userId)
-      .update({
-        tags:firestore.FieldValue.arrayUnion(tag)
-      });
-    }
-    )
+        .collection('Users')
+        .doc(userId)
+        .update({
+          tags: firestore.FieldValue.arrayUnion(tag),
+        });
+    });
   };
   const disliked = item => {
     console.log('disssss', item);
@@ -71,6 +70,7 @@ const ArcList = ({navigation, route}) => {
           password: 'John123',
           data: dat,
           utags: tags,
+          api: 'recommend'
         }),
       })
         .then(response => response.json())
@@ -130,7 +130,9 @@ const ArcList = ({navigation, route}) => {
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
-            onPress={() => navigation.navigate('ArticleView', item)}>
+            onPress={() =>
+              navigation.navigate('ArticleView', {item: item, userId: namex})
+            }>
             <View style={styles.listitem}>
               <View>
                 <Text style={styles.title}>Title: {item.title}</Text>
@@ -142,13 +144,23 @@ const ArcList = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
-            <View>
+            <View style={styles.ButtonDistribution}>
               <Button title="Like" color="green" onPress={() => liked(item)} />
               <Button
                 title="Dislike"
                 color="red"
                 onPress={() => disliked(item)}
               />
+              {/* <TouchableOpacity
+                onPress={liked(item)}
+                style={styles.appButtonContainer1}>
+                <Text style={styles.buttonText}>Like</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={disliked(item)}
+                style={styles.appButtonContainer3}>
+                <Text style={styles.buttonText}>Dislike</Text>
+              </TouchableOpacity> */}
             </View>
           </TouchableOpacity>
         )}
@@ -168,11 +180,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
-    borderWidth: 3,
-    borderColor: 'brown',
     padding: 10,
     marginTop: 10,
-    borderRadius: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     height: 160,
   },
   text: {
@@ -197,6 +208,34 @@ const styles = StyleSheet.create({
   },
   likeDislikeTemp: {
     color: 'white',
+  },
+  ButtonDistribution: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  appButtonContainer1: {
+    elevation: 8,
+    backgroundColor: '#81B581',
+    borderRadius: 10,
+    paddingVertical: 10,
+    // paddingHorizontal: 12,
+    width: 160,
+    marginRight: 20,
+    marginLeft: 10,
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  appButtonContainer3: {
+    elevation: 8,
+    backgroundColor: '#CF3C3C',
+    borderRadius: 10,
+    paddingVertical: 10,
+    // paddingHorizontal: 12,
+    width: 160,
+    marginRight: 20,
+    marginLeft: 10,
+    marginTop: 10,
+    flexDirection: 'row',
   },
 });
 export default ArcList;

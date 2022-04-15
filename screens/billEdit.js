@@ -28,39 +28,49 @@ const validationSchema = yup.object({
   cost: yup.string().required(),
 });
 
-export default function BillProposal({route}) {
-  const Name = route.params.name;
+export default function BillEdit({route}) {
+  const Name = 'Supreme Court';
+  const title = route.params.data.title;
+  const preamble = route.params.data.preamble;
+  const enac = route.params.data.enactingClause;
+  const clause = route.params.data.clause;
+  const interpretationProvision = route.params.data.interpretationProvision;
+  const comingIntoForceProvision = route.params.data.comingIntoForceProvision;
+  const summary = route.params.data.summary;
+  const cost = route.params.data.cost;
+  const bill_no = route.params.data.number;
+  const key = route.params.data.key;
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView>
         <View style={styles.Conatainer}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Bill Proposal</Text>
+            <Text style={styles.headerText}>Bill Edit</Text>
           </View>
 
-               
-                
-                  
-            
           <Formik
             initialValues={{
-              number: '',
-              title: '',
-              preamble: '',
-              enactingClause: '',
-              clause: '',
-              interpretationProvision: '',
-              comingIntoForceProvision: '',
-              summary: '',
-              cost: '',
+              number: String(bill_no),
+              title: title,
+              preamble: preamble,
+              enactingClause: enac,
+              clause: clause,
+              interpretationProvision: interpretationProvision,
+              comingIntoForceProvision: comingIntoForceProvision,
+              summary: summary,
+              cost: String(cost),
             }}
             onSubmit={(values, actions) => {
               actions.resetForm();
-              values['name'] = Name;
+              values.name = Name;
               values['total downvotes'] = 0;
               values['total upvotes'] = 0;
-              console.log(values);
-
+              values.status = 'active';
+              const currentDate = new Date().getDate() + 3;
+              const currentMonth = new Date().getMonth() + 1;
+              const currentYear = new Date().getFullYear();
+              values.dueDate = [currentDate, currentMonth, currentYear];
+              console.log('this is submit');
               // fetch('https://directdemo-c8f7a-default-rtdb.asia-southeast1.firebasedatabase.app/bills.json',
               // {
               //     method: 'POST',
@@ -71,25 +81,10 @@ export default function BillProposal({route}) {
               //         values
               //     )
               // })
-              firestore().collection('Bills').add(values);
-              fetch('https://fcm.googleapis.com/fcm/send', {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                      'Authorization': 'key=AAAAbICcrgA:APA91bFua2I_QOMauNhm4yOrlApDcxRouzszKWai6Cj2WKiXGeKm13AwgByTBedIRUaGiiEgOZWJTWswIj5FGw1jHTiyG65lLJhb9xcx2jydM6hXJeRgGTGBsmJSdUm6yr6UL1hXU8qH'
-                    },
-                    body: JSON.stringify({
-                      "notification":{
-                        "body":values["preamble"],
-                        "title":values["title"]
-                      },
-                      'to':'/topics/All'
-                    }),
-                  }).then((response)=>{
-                    console.log(response);
-                  }
-                  )
+              firestore()
+                .collection('Bills')
+                .add(values)
+                .then(alert('Bill Recreated'));
             }}
             validationSchema={validationSchema}>
             {props => {

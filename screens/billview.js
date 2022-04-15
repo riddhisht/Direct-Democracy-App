@@ -29,6 +29,7 @@ const ViewBill = ({route, navigation}) => {
   const userId = route.params.userId;
   const key = route.params.data.key;
   const status = route.params.data.status;
+  const arts = route.params.data.arts;
 
   return (
     <ScrollView style={styles.container}>
@@ -78,7 +79,18 @@ const ViewBill = ({route, navigation}) => {
 
       <Button
         title="Check Articles"
-        onPress={() => navigation.navigate('ArcList')}
+        onPress={() => navigation.navigate('billArticles', {articleIDs: arts})}
+      />
+      <Text>{'\n \n'}</Text>
+      <Button
+        title="Write an article for this bill"
+        onPress={() =>
+          navigation.navigate('ArticleUp', {
+            billkey: key,
+            frombill: true,
+            uname: username,
+          })
+        }
       />
       <Text>{'\n \n'}</Text>
     </ScrollView>
