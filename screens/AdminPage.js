@@ -103,7 +103,7 @@ const AdminPage = ({navigation}) => {
           // return a component using that data
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('ViewBill', {
+              navigation.navigate('adminReport', {
                 data: item,
                 username: username,
                 userId: userId,

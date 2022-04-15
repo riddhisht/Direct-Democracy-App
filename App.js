@@ -20,6 +20,7 @@ import ArticleView from './screens/ArticleView';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ArticleUp from './screens/ArticleUpload';
 import billArticles from './screens/billArticles';
+import AdminReport from './screens/adminReport';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -31,19 +32,7 @@ const Tabs = () => {
       <Stack.Screen name="AdminPage" component={AdminPage} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Homepage" component={Homepage} />
-      <Stack.Screen
-        name="Bill Proposal"
-        component={BillProposal}
-        options={{
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="BS"
-              color="red"
-            />
-          ),
-        }}
-      />
+      <Stack.Screen name="Bill Proposal" component={BillProposal} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="View" component={DummyView} />
       <Stack.Screen name="ViewBill" component={ViewBill} />
@@ -53,7 +42,7 @@ const Tabs = () => {
       <Stack.Screen name="ArticleUp" component={ArticleUp} />
       <Stack.Screen name="PreviousBills" component={PreviousBills} />
       <Stack.Screen name="billArticles" component={billArticles} />
-
+      <Stack.Screen name="adminReport" component={AdminReport} />
     </Stack.Navigator>
   );
 };

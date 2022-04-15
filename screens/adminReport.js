@@ -33,6 +33,7 @@ const AdminReport = ({route, navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
+      <Text> Admin page</Text>
       <Text>{status}</Text>
       <Text style={styles.title}>Title</Text>
       <Text style={styles.content}>{title}</Text>
@@ -74,6 +75,10 @@ const AdminReport = ({route, navigation}) => {
           }
         />
       )}
+      <Button
+        title="Check Articles"
+        onPress={() => navigation.navigate('billArticles', {articleIDs: arts})}
+      />
     </ScrollView>
   );
 };
