@@ -25,39 +25,58 @@ import BillEdit from './screens/billEdit';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="AdminLogin" component={AdminLoginScreen} />
-      <Stack.Screen name="AdminPage" component={AdminPage} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="Homepage" component={Homepage} />
-      <Stack.Screen name="Bill Proposal" component={BillProposal} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="View" component={DummyView} />
-      <Stack.Screen name="ViewBill" component={ViewBill} />
-      <Stack.Screen name="billvoting" component={billvoting} />
-      <Stack.Screen name="ArcList" component={ArcList} />
-      <Stack.Screen name="ArticleView" component={ArticleView} />
-      <Stack.Screen name="ArticleUp" component={ArticleUp} />
-      <Stack.Screen name="PreviousBills" component={PreviousBills} />
-      <Stack.Screen name="billArticles" component={billArticles} />
-      <Stack.Screen name="adminReport" component={AdminReport} />
-      <Stack.Screen name="billEdit" component={BillEdit} />
-    </Stack.Navigator>
-  );
-};
+// const Tabs = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="Login" component={LoginScreen} />
+//       <Stack.Screen name="AdminLogin" component={AdminLoginScreen} />
+//       <Stack.Screen name="AdminPage" component={AdminPage} />
+//       <Stack.Screen name="Signup" component={SignupScreen} />
+//       <Stack.Screen name="Homepage" component={Homepage} />
+//       <Stack.Screen name="Bill Proposal" component={BillProposal} />
+//       <Stack.Screen name="Profile" component={Profile} />
+//       <Stack.Screen name="View" component={DummyView} />
+//       <Stack.Screen name="ViewBill" component={ViewBill} />
+//       <Stack.Screen name="billvoting" component={billvoting} />
+//       <Stack.Screen name="ArcList" component={ArcList} />
+//       <Stack.Screen name="ArticleView" component={ArticleView} />
+//       <Stack.Screen name="ArticleUp" component={ArticleUp} />
+//       <Stack.Screen name="PreviousBills" component={PreviousBills} />
+//       <Stack.Screen name="billArticles" component={billArticles} />
+//       <Stack.Screen name="adminReport" component={AdminReport} />
+//       <Stack.Screen name="billEdit" component={BillEdit} />
+//     </Stack.Navigator>
+//   );
+// };
 const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Tabs" component={Tabs} />
-        <Tab.Screen name="Login" component={LoginScreen} />
-        <Tab.Screen name="Signup" component={SignupScreen} />
+      {/* <Tab.Navigator>
+        <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen name="View" component={DummyView} />
+        <Stack.Screen name="ArcList" component={ArcList} />
         <Tab.Screen name="AdminLogin" component={AdminLoginScreen} />
         <Tab.Screen name="Profile" component={Profile} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="AdminLogin" component={AdminLoginScreen} />
+        <Stack.Screen name="AdminPage" component={AdminPage} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Homepage" component={Homepage} />
+        <Stack.Screen name="Bill Proposal" component={BillProposal} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="View" component={DummyView} />
+        <Stack.Screen name="ViewBill" component={ViewBill} />
+        <Stack.Screen name="billvoting" component={billvoting} />
+        <Stack.Screen name="ArcList" component={ArcList} />
+        <Stack.Screen name="ArticleView" component={ArticleView} />
+        <Stack.Screen name="ArticleUp" component={ArticleUp} />
+        <Stack.Screen name="PreviousBills" component={PreviousBills} />
+        <Stack.Screen name="billArticles" component={billArticles} />
+        <Stack.Screen name="adminReport" component={AdminReport} />
+        <Stack.Screen name="billEdit" component={BillEdit} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
