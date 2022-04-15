@@ -26,15 +26,20 @@ const DummyView = ({navigation, route}) => {
   const [filterDat, setFilterDat] = useState([]);
   const [searchText, setSearchText] = useState('');
 
-  const searchFilter = (text) =>{
-      
-    if (text){
-      const newData = dat.filter((item)=>{
-        const itemData = item.title ? item.title.toUpperCase() : "".toUpperCase()
-        const itemData2 =  item.preamble? item.preamble.toUpperCase() : "".toUpperCase();
+  const searchFilter = text => {
+    if (text) {
+      const newData = dat.filter(item => {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const itemData2 = item.preamble
+          ? item.preamble.toUpperCase()
+          : ''.toUpperCase();
 
         const textData = text.toUpperCase();
-        return itemData.indexOf(textData) >-1 || itemData2.indexOf(textData)>-1;
+        return (
+          itemData.indexOf(textData) > -1 || itemData2.indexOf(textData) > -1
+        );
       });
       setFilterDat(newData);
       setSearchText(text);
@@ -42,7 +47,7 @@ const DummyView = ({navigation, route}) => {
       setFilterDat(dat);
       setSearchText(text);
     }
-  }
+  };
 
   useEffect(() => {
     const currentDate = new Date().getDate();
@@ -80,12 +85,26 @@ const DummyView = ({navigation, route}) => {
               status: documentSnapshot.data().status,
               upvotes: documentSnapshot.data()['total upvotes'],
               dueDate: documentSnapshot.data().dueDate,
-              arts: documentSnapshot.data().arts
+              arts: documentSnapshot.data().arts,
             });
             setFilterDat(bills);
             setDat(bills);
           } else {
             console.log('false');
+
+            if (
+              documentSnapshot.data()['total upvotes'] /
+                documentSnapshot.data()['total downvotes'] >=
+              0.6
+            ) {
+              firestore().collection('Bills').doc(documentSnapshot.id).update({
+                status: 'decision',
+              });
+            } else {
+              firestore().collection('Bills').doc(documentSnapshot.id).update({
+                status: 'rejected',
+              });
+            }
             expiredBills.push({
               key: documentSnapshot.id,
               number: documentSnapshot.data().number,
@@ -103,7 +122,7 @@ const DummyView = ({navigation, route}) => {
               status: documentSnapshot.data().status,
               upvotes: documentSnapshot.data()['total upvotes'],
               dueDate: documentSnapshot.data().dueDate,
-              arts: documentSnapshot.data().arts
+              arts: documentSnapshot.data().arts,
             });
             setExpiredBillsData(expiredBills);
           }
@@ -132,7 +151,6 @@ const DummyView = ({navigation, route}) => {
             style={styles.appButtonText}>
             Previous Bills
           </Text>
-
         </View>
         <View style={styles.appButtonContainer2}>
           <Text
@@ -143,10 +161,10 @@ const DummyView = ({navigation, route}) => {
         </View>
       </View>
       <TextInput
-          placeholder='search bills'
-          value={searchText}
-          onChangeText={(text)=> searchFilter(text)}
-        />
+        placeholder="search bills"
+        value={searchText}
+        onChangeText={text => searchFilter(text)}
+      />
       <FlatList
         data={filterDat}
         renderItem={({item}) => (
