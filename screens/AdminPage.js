@@ -42,6 +42,7 @@ const AdminPage = ({navigation}) => {
             downvotes: documentSnapshot.data()['total downvotes'],
             status: documentSnapshot.data()['status'],
             upvotes: documentSnapshot.data()['total upvotes'],
+            arts: documentSnapshot.data().arts,
           });
         });
         setDat(bills);
@@ -84,7 +85,7 @@ const AdminPage = ({navigation}) => {
       .then(() => {
         console.log('bill rejected');
       });
-    navigation.navigate('Bill Proposal');
+    navigation.navigate('billEdit', {data: item});
   };
   if (loading) {
     return <ActivityIndicator />;
@@ -120,7 +121,7 @@ const AdminPage = ({navigation}) => {
                   {'\n'}
                   <Text>key:{item.key}</Text>
                 </Text>
-                <Button
+                {/* <Button
                   title="Accept"
                   color="green"
                   onPress={() => accept(item.key)}
@@ -130,7 +131,18 @@ const AdminPage = ({navigation}) => {
                   color="red"
                   onPress={() => reject(item.key)}
                 />
-                <Button title="Edit" color="grey" onPress={() => edit(item)} />
+                <Button title="Edit" color="grey" onPress={() => edit(item)} /> */}
+                <Button
+                  title="View Report"
+                  color="yellow"
+                  onPress={() =>
+                    navigation.navigate('adminReport', {
+                      data: item,
+                      username: username,
+                      userId: userId,
+                    })
+                  }
+                />
               </View>
             </View>
           </TouchableOpacity>

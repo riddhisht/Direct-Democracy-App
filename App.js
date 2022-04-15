@@ -21,6 +21,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ArticleUp from './screens/ArticleUpload';
 import billArticles from './screens/billArticles';
 import AdminReport from './screens/adminReport';
+import BillEdit from './screens/billEdit';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +44,7 @@ const Tabs = () => {
       <Stack.Screen name="PreviousBills" component={PreviousBills} />
       <Stack.Screen name="billArticles" component={billArticles} />
       <Stack.Screen name="adminReport" component={AdminReport} />
+      <Stack.Screen name="billEdit" component={BillEdit} />
     </Stack.Navigator>
   );
 };
