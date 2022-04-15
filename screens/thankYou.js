@@ -50,6 +50,7 @@ const thankYou = ({navigation, route}) => {
           name: 'John',
           password: 'John123',
           data: data,
+          api: "filter"
           //utags: tags,
         }),
       })

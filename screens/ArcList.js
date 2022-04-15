@@ -70,6 +70,7 @@ const ArcList = ({navigation, route}) => {
           password: 'John123',
           data: dat,
           utags: tags,
+          api: 'recommend'
         }),
       })
         .then(response => response.json())
