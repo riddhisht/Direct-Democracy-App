@@ -34,20 +34,20 @@ const PreviousBills = ({navigation, route}) => {
           //     })
           //   }>
           <TouchableOpacity
-          onPress={() => navigation.navigate('ViewBill', {data: item})}>
-          <View style={styles.listitem}>
-            <View style={styles.topPart}>
-              <Text style={styles.title}>{item.title}</Text>
+            onPress={() => navigation.navigate('ViewBill', {data: item})}>
+            <View style={styles.listitem}>
+              <View style={styles.topPart}>
+                <Text style={styles.title}>{item.title}</Text>
 
-              <Text style={styles.number} color="white">
-                Bill Number: {item.number}{' '}
-              </Text>
-              <Text style={styles.endDate}>Due </Text>
-            </View>
-            {/* <View style={styles.bottomCard}>
+                <Text style={styles.number} color="white">
+                  Bill Number: {item.number}{' '}
+                </Text>
+                <Text style={styles.endDate}>Due </Text>
+              </View>
+              {/* <View style={styles.bottomCard}>
             <Text>Comments</Text>
           </View> */}
-          </View>
+            </View>
           </TouchableOpacity>
         )}
       />
