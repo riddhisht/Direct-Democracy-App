@@ -78,6 +78,25 @@ export default function BillProposal({route}){
                 firestore()
                         .collection('Bills')
                         .add(values)
+                fetch('https://fcm.googleapis.com/fcm/send', {
+                    method: 'POST',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      'Authorization': 'key=AAAAbICcrgA:APA91bFua2I_QOMauNhm4yOrlApDcxRouzszKWai6Cj2WKiXGeKm13AwgByTBedIRUaGiiEgOZWJTWswIj5FGw1jHTiyG65lLJhb9xcx2jydM6hXJeRgGTGBsmJSdUm6yr6UL1hXU8qH'
+                    },
+                    body: JSON.stringify({
+                      "notification":{
+                        "body":values["preamble"],
+                        "title":values["title"]
+                      },
+                      'to':'/topics/All'
+                    }),
+                  }).then((response)=>{
+                    console.log(response);
+                  }
+                  )
+                  
             }
 
 

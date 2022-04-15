@@ -19,6 +19,7 @@ import ArticleView from './screens/ArticleView';
 // import Tabs from './navigation/tabNavigation';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ArticleUp from './screens/ArticleUpload';
+import messaging from '@react-native-firebase/messaging'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,6 +57,7 @@ const Tabs = () => {
   );
 };
 const App = () => {
+  messaging().subscribeToTopic('All');
   return (
     <NavigationContainer>
       <Tab.Navigator>
