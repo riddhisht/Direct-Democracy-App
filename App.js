@@ -5,6 +5,7 @@ import SignupScreen from './screens/signup';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BillProposal from './screens/BillPropasal';
+import thankYou from './screens/thankYou';
 import Profile from './screens/profile';
 import DummyView from './screens/dummyview';
 import ViewBill from './screens/billview';
@@ -70,6 +71,8 @@ const App = () => {
         <Stack.Screen name="ViewBill" component={ViewBill} />
         <Stack.Screen name="billvoting" component={billvoting} />
         <Stack.Screen name="ArcList" component={ArcList} />
+        <Stack.Screen name="thankYou" component={thankYou} />
+
         <Stack.Screen name="ArticleView" component={ArticleView} />
         <Stack.Screen name="ArticleUp" component={ArticleUp} />
         <Stack.Screen name="PreviousBills" component={PreviousBills} />

@@ -31,6 +31,8 @@ const ArticleUp = ({navigation, route}) => {
   const uname = route.params.uname;
   const billkey = route.params.billkey;
   const frombill = route.params.frombill;
+  const userId = route.params.userId;
+
   const article = {
     title: title,
     data: data,
@@ -91,8 +93,9 @@ const ArticleUp = ({navigation, route}) => {
     
     
     } else {
-      firestore().collection('Article').add(article)
-      console.log("hello 000000")
+      navigation.navigate("thankYou",{ article:article, "userId" :userId })  
+      // firestore().collection('Article').add(article)
+      // console.log("hello 000000")
 
 
     }
