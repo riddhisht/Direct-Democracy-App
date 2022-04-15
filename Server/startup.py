@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from better_profanity import profanity
+# from better_profanity import profanity
 
 
 app = Flask(__name__)

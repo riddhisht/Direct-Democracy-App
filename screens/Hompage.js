@@ -52,12 +52,20 @@ export default function Hompage({route, navigation}) {
       <Button
         title="Article"
         color="#841584"
-        onPress={() => navigation.navigate('ArticleUp', {'uname': name, 'frombill':false, 'billkey':null})}
+        onPress={() =>
+          navigation.navigate('ArticleUp', {
+            uname: name,
+            frombill: false,
+            billkey: null,
+          })
+        }
       />
       <Button
         title="Article List"
         color="#841584"
-        onPress={() => navigation.navigate('ArcList', {userId: userId})}
+        onPress={() =>
+          navigation.navigate('ArcList', {userId: userId, name: name})
+        }
       />
     </View>
   );

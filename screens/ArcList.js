@@ -15,7 +15,7 @@ import {ActivityIndicator} from 'react-native';
 
 const ArcList = ({navigation, route}) => {
   const userId = route.params.userId;
-
+  const namex = route.params.name;
   const [dat, setDat] = useState([]);
   const [load, setLoad] = useState(true);
   const [tags, setTags] = useState([]);
@@ -130,7 +130,9 @@ const ArcList = ({navigation, route}) => {
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
-            onPress={() => navigation.navigate('ArticleView', item)}>
+            onPress={() =>
+              navigation.navigate('ArticleView', {item: item, userId: namex})
+            }>
             <View style={styles.listitem}>
               <View>
                 <Text style={styles.title}>Title: {item.title}</Text>
