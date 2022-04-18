@@ -9,8 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-function Profile() {
-  const name = 'manav';
+function Profile({route}) {
+  const name = route.params.name;
   const [toggleState, setToggleState] = useState(1);
   const [articles, setarticles] = useState([]);
   const [bills, setbills] = useState([]);
@@ -94,7 +94,7 @@ function Profile() {
               uri: 'https://media.vanityfair.com/photos/5cae5ea3f038af13baee9656/1:1/w_1332,h_1332,c_limit/jane-the-virgin-season-5-michael-memories-twist-raphael.jpg',
             }}
           />
-          <Text style={styles.name}>Jane Doe</Text>
+          <Text style={styles.name}>{name}</Text>
         </View>
       </View>
       <View style={styles.options}>

@@ -4,19 +4,24 @@ import {
   Text,
   View,
   Button,
-  TextInput,
   ScrollView,
   FlatList,
-  TouchableOpacity,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
+  TouchableOpacity
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-
+// import RNHTMLtoPDF from 'react-native-html-to-pdf';
+// import RNPrint from 'react-native-print';
 
 const AdminReport = ({route, navigation}) => {
+  // const pdfGenerate = async ()=>{
+  //   const results = await RNHTMLtoPDF.convert({
+  //     html: '<h1>Custom converted PDF Document</h1>',
+  //     fileName: 'test',
+  //     base64: true,
+  //   })
 
+  //   await RNPrint.print({ filePath: results.filePath })
+  // }
   const accept = key => {
     //write what happens after accept
     firestore()
@@ -221,6 +226,7 @@ const AdminReport = ({route, navigation}) => {
                 />
 
             <Button title="Edit" color="grey" onPress={() => edit(item)} /> 
+            {/* <Button title ='Generate Report' color ="blue" onPress={pdfGenerate} /> */}
 
       <Text>{"\n"}{"\n"}</Text>
     </ScrollView>
