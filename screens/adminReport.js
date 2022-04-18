@@ -9,19 +9,11 @@ import {
   TouchableOpacity
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-// import RNHTMLtoPDF from 'react-native-html-to-pdf';
-// import RNPrint from 'react-native-print';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import RNPrint from 'react-native-print';
 
 const AdminReport = ({route, navigation}) => {
-  // const pdfGenerate = async ()=>{
-  //   const results = await RNHTMLtoPDF.convert({
-  //     html: '<h1>Custom converted PDF Document</h1>',
-  //     fileName: 'test',
-  //     base64: true,
-  //   })
-
-  //   await RNPrint.print({ filePath: results.filePath })
-  // }
+  
   const accept = key => {
     //write what happens after accept
     firestore()
@@ -83,6 +75,22 @@ const AdminReport = ({route, navigation}) => {
 
   const articleIDs = arts
   const [dat,setDat] = useState([])
+  const pdfGenerate = async ()=>{
+    const results = await RNHTMLtoPDF.convert({
+      html: '<h1>'+title+ '</h1><br><h1>Total Upvotes:'
+      +upvotes+'</h1><br><h1>Total Downvotes:'+downvotes+
+      '</h1><br><h1>Preamble</h1><br><p>'+preamble+'<p><br><h1>Enacting Clause</h1><br><p>'+enac+
+      '<p><br><h1>Clause</h1><br><p>'+clause+'<p><br><h1>Interpretation Provision</h1><br><p>'+interpretationProvision+
+      '<p><br><h1>Coming Into Provision<h1><br><p>'+comingIntoForceProvision+
+      '<p><br><h1>Summary<h1><br><p>'+summary+'<p><br><h1> Cost <h1><br><p>'+
+       cost+'<p><br>'
+      ,
+      fileName: 'test',
+      base64: true,
+    })
+
+    await RNPrint.print({ filePath: results.filePath })
+  }
   useEffect(()=>{
     const tot = upvotes+downvotes;
     setup(((upvotes/tot)*100).toFixed(2))
@@ -226,7 +234,7 @@ const AdminReport = ({route, navigation}) => {
                 />
 
             <Button title="Edit" color="grey" onPress={() => edit(item)} /> 
-            {/* <Button title ='Generate Report' color ="blue" onPress={pdfGenerate} /> */}
+            <Button title ='Generate Report' color ="blue" onPress={pdfGenerate} />
 
       <Text>{"\n"}{"\n"}</Text>
     </ScrollView>
