@@ -3,13 +3,13 @@ import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useState, useEffect} from 'react';
 
-const LoginScreen = ({navigation}) => {
+const loginError = ({navigation,route}) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-
+  const error=route.params.error;
   useEffect(() => {
     console.log('helllllll');
 
@@ -113,6 +113,9 @@ const LoginScreen = ({navigation}) => {
               style={styles.signUp}>
               Don't have an account? Sign Up
             </Text>
+            <Text style={styles.error}>
+                {error}
+            </Text>
           </View>
         </View>
       </View>
@@ -175,6 +178,13 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     color: '#18A999',
   },
+  error:{
+    marginLeft: 40,
+    marginTop: 10,
+    fontSize: 16,
+    // fontWeight: 'bold',
+    color: 'red',
+  }
 });
 
-export default LoginScreen;
+export default loginError;

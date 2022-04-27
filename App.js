@@ -24,7 +24,7 @@ import messaging from '@react-native-firebase/messaging'
 import billArticles from './screens/billArticles';
 import AdminReport from './screens/adminReport';
 import BillEdit from './screens/billEdit';
-
+import loginError from './screens/loginError';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -82,6 +82,7 @@ const App = () => {
         <Stack.Screen name="billArticles" component={billArticles} />
         <Stack.Screen name="adminReport" component={AdminReport} />
         <Stack.Screen name="billEdit" component={BillEdit} />
+        <Stack.Screen name="loginError" component={loginError}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
