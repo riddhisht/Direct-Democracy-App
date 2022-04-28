@@ -23,7 +23,7 @@ const ArticleView = ({route}) => {
   const articleKey = route.params.item.key;
   const [newComment, setNewComment] = useState('');
   const liked = () => {
-    console.log('a');
+    console.log(comments);
     firestore()
       .collection('Article')
       .doc(articleKey)

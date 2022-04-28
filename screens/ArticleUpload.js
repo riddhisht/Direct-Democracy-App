@@ -25,8 +25,6 @@ const ArticleUp = ({navigation, route}) => {
   const [tog, setTog] = useState('');
   const [arts, setArts] = useState([]);
 
-
-
   //   const uname = route.params.name;
   const uname = route.params.uname;
   const billkey = route.params.billkey;
@@ -40,9 +38,7 @@ const ArticleUp = ({navigation, route}) => {
     likes: likes,
     dislikes: dislikes,
     uname: uname,
-    
   };
-
 
   // useEffect(() => {
   //   console.log('effect');
@@ -67,41 +63,32 @@ const ArticleUp = ({navigation, route}) => {
   //         .then(json => {
   //           //console.log("returned data: " + json);
   //           setFilter(json);
-  
-  
+
   //         });
   //     return
   //       }
 
   //       await output();
   //   }
-    
+
   // }, [tog]);
   const clickhandler = async () => {
+    if (frombill === true) {
+      const newart = await firestore().collection('Article').add(article);
+      console.log('hello ', newart.id);
 
-    if (frombill===true) {
-      const newart = await firestore().collection('Article').add(article)
-      console.log("hello ",newart.id)
-  
-  
-  
-      firestore().collection('Bills').doc(billkey).update({
-        // arts: FieldValue.arrayU;nion("newvalueeeeee")
-        arts: firestore.FieldValue.arrayUnion(newart.id)
-      })
-    
-    
-    
+      firestore()
+        .collection('Bills')
+        .doc(billkey)
+        .update({
+          // arts: FieldValue.arrayU;nion("newvalueeeeee")
+          arts: firestore.FieldValue.arrayUnion(newart.id),
+        });
     } else {
-      navigation.navigate("thankYou",{ article:article, "userId" :userId })  
+      navigation.navigate('thankYou', {article: article, userId: userId});
       // firestore().collection('Article').add(article)
       // console.log("hello 000000")
-
-
     }
-    
-
-
   };
 
   return (
@@ -126,7 +113,7 @@ const ArticleUp = ({navigation, route}) => {
             placeholder="Add some hashtags for your article"
             //onChangeText = {(val)=> {setsalonname(val.charAt(0).toUpperCase()+ val.slice(1).toLowerCase())}}
             onChangeText={val => {
-              sethashtags(val.split(" "));
+              sethashtags(val.split(' '));
             }}
             style={styles.inputs}
           />
@@ -140,6 +127,7 @@ const ArticleUp = ({navigation, route}) => {
             onChangeText={val => {
               setdata(val);
             }}
+            maxLength={1000}
           />
           <View style={styles.buttonView}>
             <Button

@@ -85,7 +85,7 @@ const thankYou = ({navigation, route}) => {
 return(
     
     <View>
-    <Text>{thank} {userId}</Text>
+    <Text>{thank} </Text>
     
     <Button
     title='Back to Home'

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {useState} from 'react';
 
@@ -34,47 +34,12 @@ export default function Hompage({route, navigation}) {
 
   if (loading) {
     return <ActivityIndicator />;
+  } else {
+    navigation.navigate('View', {name: name, userId: userId});
   }
 
   return (
     <View>
-      <Text>Welcome, {name} </Text>
-      <Button
-        title="Signout"
-        color="blue"
-        onPress={() => navigation.replace('Login')}
-      />
-      <Button
-        title="Bill Proposal"
-        color="blue"
-        onPress={() => navigation.navigate('Bill Proposal', {name: name})}
-      />
-      <Button
-        title="Bills"
-        color="#841584"
-        onPress={() =>
-          navigation.navigate('View', {name: name, userId: userId})
-        }
-      />
-      <Button
-        title="Article"
-        color="#841584"
-        onPress={() =>
-          navigation.navigate('ArticleUp', {
-            uname: name,
-            frombill: false,
-            billkey: null,
-            userId: userId,
-          })
-        }
-      />
-      <Button
-        title="Article List"
-        color="#841584"
-        onPress={() =>
-          navigation.navigate('ArcList', {userId: userId, name: name})
-        }
-      />
       <View style={styles.bottomTabNavigator}>
         <TouchableOpacity
           onPress={() =>

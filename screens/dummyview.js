@@ -146,6 +146,8 @@ const DummyView = ({navigation, route}) => {
             onPress={() =>
               navigation.navigate('PreviousBills', {
                 data: expiredBillsData,
+                username: username,
+                userId: userId,
               })
             }
             style={styles.appButtonText}>
@@ -154,17 +156,28 @@ const DummyView = ({navigation, route}) => {
         </View>
         <View style={styles.appButtonContainer2}>
           <Text
-            onPress={() => navigation.navigate('Bill Proposal',{name:username})}
+            onPress={() =>
+              navigation.navigate('Bill Proposal', {
+                name: username,
+              })
+            }
             style={styles.appButtonText}>
             Propose New Bill
           </Text>
         </View>
+        <Button
+          title="Signout"
+          color="blue"
+          onPress={() => navigation.replace('Login')}
+        />
       </View>
-      <TextInput
-        placeholder="search bills"
-        value={searchText}
-        onChangeText={text => searchFilter(text)}
-      />
+      <View style={styles.search}>
+        <TextInput
+          placeholder="Search Bills"
+          value={searchText}
+          onChangeText={text => searchFilter(text)}
+        />
+      </View>
       <FlatList
         data={filterDat}
         renderItem={({item}) => (
@@ -193,6 +206,34 @@ const DummyView = ({navigation, route}) => {
           </TouchableOpacity>
         )}
       />
+      <View style={styles.bottomTabNavigator}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('View', {name: username, userId: userId})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Bills</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('ArcList', {userId: userId, name: username})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Articles</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Profile', {name: username, userId: userId})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('AdminLogin')}
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Admin</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -233,6 +274,12 @@ const styles = StyleSheet.create({
   },
   avatar: {
     paddingLeft: 50,
+  },
+  search: {
+    borderWidth: 3,
+    borderRadius: 20,
+    borderColor: '#18A999',
+    marginTop: 10,
   },
   appButtonContainer1: {
     elevation: 8,
@@ -286,6 +333,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     top: 350,
     left: 200,
+  },
+  bottomTabNavigator: {
+    flexDirection: 'row',
+    color: 'black',
+    backgroundColor: '#18A999',
+    position: 'absolute',
+    top: 620,
+    width: '100%',
+    height: 60,
+    borderRadius: 20,
+  },
+  ButtonOP: {
+    paddingRight: 35,
+    paddingLeft: 20,
+    paddingTop: 17,
+  },
+  textBottom: {
+    color: '#FFFFF2',
+    fontSize: 17,
+    fontWeight: '600',
   },
 });
 export default DummyView;

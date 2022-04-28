@@ -140,7 +140,7 @@ const billvoting = ({route}) => {
           }}
         />
         <View>
-          <Pressable style={styles.button}>
+          <Pressable style={styles.button} onPress={()=>{alert("your vote has been recorded")}}>
             <Text style={styles.text3}>Vote</Text>
           </Pressable>
         </View>

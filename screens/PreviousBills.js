@@ -18,6 +18,8 @@ import {ActivityIndicator} from 'react-native';
 
 const PreviousBills = ({navigation, route}) => {
   const data = route.params.data;
+  const username = route.params.name;
+  const userId = route.params.userId;
   console.log(data);
   return (
     <View style={styles.container}>
@@ -40,7 +42,7 @@ const PreviousBills = ({navigation, route}) => {
                 <Text style={styles.title}>{item.title}</Text>
 
                 <Text style={styles.number} color="white">
-                  BN: {item.number}{' '}Upvotes{" "}{item.upvotes}{' '}Downvotes: {item.downvotes}
+                  Bill Number: {item.number}{' '}
                 </Text>
                 <Text style={styles.endDate}>Status: {item.status} </Text>
               </View>
@@ -51,6 +53,34 @@ const PreviousBills = ({navigation, route}) => {
           </TouchableOpacity>
         )}
       />
+      <View style={styles.bottomTabNavigator}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('View', {name: username, userId: userId})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Bills</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('ArcList', {userId: userId, name: username})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Articles</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Profile', {name: username, userId: userId})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('AdminLogin')}
+          style={styles.ButtonOP}>
+          <Text style={styles.textBottom}>Admin</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -145,6 +175,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     top: 350,
     left: 200,
+  },
+  bottomTabNavigator: {
+    flexDirection: 'row',
+    color: 'black',
+    backgroundColor: '#18A999',
+    position: 'absolute',
+    top: 620,
+    width: '100%',
+    height: 60,
+    borderRadius: 20,
+  },
+  ButtonOP: {
+    paddingRight: 35,
+    paddingLeft: 20,
+    paddingTop: 17,
+  },
+  textBottom: {
+    color: '#FFFFF2',
+    fontSize: 17,
+    fontWeight: '600',
   },
 });
 export default PreviousBills;

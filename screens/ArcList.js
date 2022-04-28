@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {ActivityIndicator} from 'react-native';
-
+//heelp
 const ArcList = ({navigation, route}) => {
   const userId = route.params.userId;
   const namex = route.params.name;
@@ -70,7 +70,7 @@ const ArcList = ({navigation, route}) => {
           password: 'John123',
           data: dat,
           utags: tags,
-          api: 'recommend'
+          api: 'recommend',
         }),
       })
         .then(response => response.json())
@@ -121,10 +121,20 @@ const ArcList = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Hello
-        {tags}
-      </Text>
+      <View style={styles.appButtonContainer2}>
+        <Text
+          onPress={() =>
+            navigation.navigate('ArticleUp', {
+              uname: namex,
+              billkey: '0',
+              frombill: '0',
+              userId: userId,
+            })
+          }
+          style={styles.appButtonText}>
+          Upload New Article
+        </Text>
+      </View>
       <FlatList
         data={updated}
         renderItem={({item}) => (
@@ -135,36 +145,59 @@ const ArcList = ({navigation, route}) => {
             }>
             <View style={styles.listitem}>
               <View>
-                <Text style={styles.title}>Title: {item.title}</Text>
+                <Text style={styles.title}>{item.title}</Text>
 
-                <Text style={styles.number}>
-                  BY {item.uname} {'\n'}
-                  <Text>Likes:{item.likes}</Text> {'\n'}
-                  <Text>dislikes:{item.dislikes}</Text>
-                </Text>
+                <Text style={styles.number}>By - {item.uname}</Text>
               </View>
-            </View>
-            <View style={styles.ButtonDistribution}>
-              <Button title="Like" color="green" onPress={() => liked(item)} />
-              <Button
-                title="Dislike"
-                color="red"
-                onPress={() => disliked(item)}
-              />
-              {/* <TouchableOpacity
-                onPress={liked(item)}
-                style={styles.appButtonContainer1}>
-                <Text style={styles.buttonText}>Like</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={disliked(item)}
-                style={styles.appButtonContainer3}>
-                <Text style={styles.buttonText}>Dislike</Text>
-              </TouchableOpacity> */}
+              <View style={styles.ButtonDistribution}>
+                <TouchableOpacity
+                  onPress={() => liked(item)}
+                  style={styles.appButtonContainer1}>
+                  {/* <Text>hello</Text> */}
+                  <Text style={styles.buttonText}>Likes {item.likes}</Text>
+                  {/* <Text style={styles.buttonText}></Text> */}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => disliked(item)}
+                  style={styles.appButtonContainer3}>
+                  <Text style={styles.buttonText}>
+                    Dislikes {item.dislikes}
+                  </Text>
+                  {/* <Text style={styles.buttonText}></Text> */}
+                </TouchableOpacity>
+              </View>
             </View>
           </TouchableOpacity>
         )}
       />
+      <View style={styles.bottomTabNavigator}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('View', {name: namex, userId: userId})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textButton}>Bills</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('ArcList', {userId: userId, name: namex})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textButton}>Articles</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Profile', {name: namex, userId: userId})
+          }
+          style={styles.ButtonOP}>
+          <Text style={styles.textButton}>Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('AdminLogin')}
+          style={styles.ButtonOP}>
+          <Text style={styles.textButton}>Admin</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -174,17 +207,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     color: 'black',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
   },
   listitem: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#F19A3E',
     padding: 10,
     marginTop: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderRadius: 20,
     height: 160,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 15,
+    margin: 5,
+    paddingLeft: 5,
   },
   text: {
     fontWeight: 'bold',
@@ -193,16 +231,55 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   title: {
-    //flex:1,
     color: 'black',
     fontSize: 25,
     fontWeight: 'bold',
+    padding: 10,
   },
   number: {
-    paddingTop: 7,
     color: 'black',
-    fontSize: 16,
+    fontSize: 18,
+    fontStyle: 'italic',
+    marginLeft: 10,
   },
+  endDate: {
+    position: 'absolute',
+    left: 275,
+    fontSize: 18,
+    top: 125,
+    color: 'white',
+  },
+  bottomTabNavigator: {
+    flexDirection: 'row',
+    color: 'black',
+    backgroundColor: '#18A999',
+    position: 'absolute',
+    top: 620,
+    width: '100%',
+    height: 60,
+    borderRadius: 20,
+  },
+  ButtonOP: {
+    paddingRight: 35,
+    paddingLeft: 20,
+    paddingTop: 17,
+  },
+  textButton: {
+    color: '#FFFFF2',
+    fontSize: 17,
+    fontWeight: '600',
+  },
+  // title: {
+  //   //flex:1,
+  //   color: 'black',
+  //   fontSize: 25,
+  //   fontWeight: 'bold',
+  // },
+  // number: {
+  //   paddingTop: 7,
+  //   color: 'black',
+  //   fontSize: 16,
+  // },
   avatar: {
     paddingLeft: 50,
   },
@@ -210,32 +287,52 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   ButtonDistribution: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
+    position: 'absolute',
+    top: 100,
+    left: 10,
   },
   appButtonContainer1: {
     elevation: 8,
     backgroundColor: '#81B581',
     borderRadius: 10,
-    paddingVertical: 10,
-    // paddingHorizontal: 12,
-    width: 160,
+    width: 90,
     marginRight: 20,
     marginLeft: 10,
     marginTop: 10,
     flexDirection: 'row',
+    // padding: 20,
+    height: 36,
   },
-  appButtonContainer3: {
-    elevation: 8,
-    backgroundColor: '#CF3C3C',
+  appButtonContainer2: {
+    // elevation: 8,
+    backgroundColor: 'black',
     borderRadius: 10,
     paddingVertical: 10,
-    // paddingHorizontal: 12,
-    width: 160,
+    paddingHorizontal: 12,
+    width: 210,
+    marginLeft: 170,
+    marginTop: 20,
+  },
+  appButtonText: {
+    fontSize: 15,
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+  },
+  appButtonContainer3: {
+    // elevation: 8,
+    backgroundColor: '#CF3C3C',
+    borderRadius: 10,
+    width: 90,
     marginRight: 20,
     marginLeft: 10,
     marginTop: 10,
     flexDirection: 'row',
+    // padding: 20,
+    height: 36,
   },
 });
 export default ArcList;

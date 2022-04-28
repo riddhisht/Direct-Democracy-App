@@ -49,11 +49,11 @@ const AdminReport = ({route, navigation}) => {
       .then(() => {
         console.log('bill rejected');
       });
-    navigation.navigate('Bill Proposal');
+    navigation.navigate('billEdit', {data: item});
   };
 
 
-  const title = route.params.data.title;
+  const title = route.params.data.title ? route.params.data.title : '';
   const preamble = route.params.data.preamble;
   const enac = route.params.data.enactingClause;
   const clause = route.params.data.clause;
@@ -97,7 +97,12 @@ const AdminReport = ({route, navigation}) => {
 
     var articles=[]
     
-    articleIDs.forEach(pushFunction)
+    if (arts){
+      console.log("arts",arts)
+      articleIDs.forEach(pushFunction)
+    }
+    
+    
     
     function pushFunction(value, index, array){
         console.log("dcoum ids, ",value)
@@ -225,15 +230,15 @@ const AdminReport = ({route, navigation}) => {
        <Button
                   title="Accept"
                   color="green"
-                  onPress={() => accept(item.key)}
+                  onPress={() => accept(key)}
                 />
                 <Button
                   title="Reject"
                   color="red"
-                  onPress={() => reject(item.key)}
+                  onPress={() => reject(key)}
                 />
 
-            <Button title="Edit" color="grey" onPress={() => edit(item)} /> 
+            <Button title="Edit" color="grey" onPress={() => edit(route.params.data)} /> 
             <Button title ='Generate Report' color ="blue" onPress={pdfGenerate} />
 
       <Text>{"\n"}{"\n"}</Text>

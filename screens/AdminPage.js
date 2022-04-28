@@ -119,7 +119,6 @@ const AdminPage = ({navigation}) => {
                   <Text>upvotes:{item.upvotes}</Text> {'\n'}
                   <Text>downvotes:{item.downvotes}</Text>
                   {'\n'}
-                  <Text>key:{item.key}</Text>
                 </Text>
                 {/* <Button
                   title="Accept"

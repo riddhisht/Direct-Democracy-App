@@ -30,6 +30,13 @@ const validationSchema = yup.object({
 
 export default function BillProposal({route}) {
   const Name = route.params.name;
+  
+  // let tomorrow = new Date(year, month, day  + 3) 
+  // const currentDate = new Date().getDate();
+  // const currentMonth = new tomorrow.getMonth() + 1;
+  // const currentYear = new tomorrow.getFullYear();
+  const dueDate =[31,5,2022]
+  console.log(dueDate);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView>
@@ -38,10 +45,6 @@ export default function BillProposal({route}) {
             <Text style={styles.headerText}>Bill Proposal</Text>
           </View>
 
-               
-                
-                  
-            
           <Formik
             initialValues={{
               number: '',
@@ -59,6 +62,9 @@ export default function BillProposal({route}) {
               values['name'] = Name;
               values['total downvotes'] = 0;
               values['total upvotes'] = 0;
+              values['dueDate']=dueDate;
+              values['status']="active";
+              values['arts']=[];
               console.log(values);
 
               // fetch('https://directdemo-c8f7a-default-rtdb.asia-southeast1.firebasedatabase.app/bills.json',

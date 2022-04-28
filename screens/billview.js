@@ -57,7 +57,7 @@ const ViewBill = ({route, navigation}) => {
       <Text style={styles.title}>Cost: </Text>
       <Text style={styles.content}>{cost}</Text>
 
-      {status === 'Active' && (
+      {status === 'active' && (
         <Button
           title="vote"
           color="black"
