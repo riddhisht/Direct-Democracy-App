@@ -79,7 +79,7 @@ const ViewBill = ({route, navigation}) => {
 
       <Button
         title="Check Articles"
-        onPress={() => navigation.navigate('billArticles', {articleIDs: arts})}
+        onPress={() => navigation.navigate('billArticles', {articleIDs: arts, userId:userId})}
       />
       <Text>{'\n \n'}</Text>
       <Button

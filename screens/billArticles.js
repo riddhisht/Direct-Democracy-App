@@ -19,7 +19,7 @@ import {ActivityIndicator} from 'react-native';
 const billArticles = ({navigation, route}) => {
   const articleIDs = route.params.articleIDs
   const [dat,setDat] = useState([])
-
+  const userId = route.params.userId
 
   
 useEffect(()=>{
@@ -39,7 +39,9 @@ useEffect(()=>{
             articles.push({
                 'title': documentSnapshot.data().title,
                 'key': documentSnapshot.id,
-                "hashtags": documentSnapshot.data().hashtags
+                "hashtags": documentSnapshot.data().hashtags,
+                "data": documentSnapshot.data().data
+
             })
             setDat(articles)
 
@@ -60,12 +62,12 @@ useEffect(()=>{
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
-            // onPress={() =>
-            //   navigation.navigate('ViewBill', {
-            //     data: item,
-            //     username: username,
-            //     userId: userId,
-            //   })
+            onPress={() =>
+              navigation.navigate('ArticleView', {
+                item: item,
+                // username: username,
+                userId: userId,
+              })}
             >
             <View style={styles.listitem}>
               <View style={styles.topPart}>
@@ -74,6 +76,7 @@ useEffect(()=>{
                 <Text style={styles.number} color="white">
                  Hashtags: {item.hashtags}{' '}
                 </Text>
+
               </View>
               {/* <View style={styles.bottomCard}>
                 <Text>Comments</Text>

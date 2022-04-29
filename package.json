@@ -29,6 +29,7 @@
     "react-native-poll": "^0.1.2",
     "react-native-print": "^0.6.0",
     "react-native-push-notification": "^8.1.1",
+    "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
     "react-native-vector-icons": "^9.0.0",
