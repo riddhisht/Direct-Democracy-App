@@ -85,7 +85,7 @@ const thankYou = ({navigation, route}) => {
 return(
     
     <View>
-    <Text>{thank} </Text>
+    <Text style={styles.text}>{thank} </Text>
     
     <Button
     title='Back to Home'
@@ -179,10 +179,10 @@ const styles = StyleSheet.create({
     marginLeft: 95,
     borderRadius: 10,
   },
-  headerText: {
+  text: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: 'white',
+    color: 'black',
   },
   buttonView: {
     marginTop: 25,

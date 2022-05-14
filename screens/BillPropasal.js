@@ -15,6 +15,7 @@ import {
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import firestore from '@react-native-firebase/firestore';
+import { NavigationContainer } from '@react-navigation/native';
 
 const validationSchema = yup.object({
   number: yup.string().required(),
@@ -28,8 +29,9 @@ const validationSchema = yup.object({
   cost: yup.string().required(),
 });
 
-export default function BillProposal({route}) {
+export default function BillProposal({route, navigation}) {
   const Name = route.params.name;
+  const userId = route.params.userId
   
   // let tomorrow = new Date(year, month, day  + 3) 
   // const currentDate = new Date().getDate();
@@ -58,6 +60,8 @@ export default function BillProposal({route}) {
               cost: '',
             }}
             onSubmit={(values, actions) => {
+              navigation.navigate("View", {"name":Name, "userId":userId})
+
               actions.resetForm();
               values['name'] = Name;
               values['total downvotes'] = 0;
@@ -95,6 +99,7 @@ export default function BillProposal({route}) {
                   }).then((response)=>{
                     console.log(response);
                   }
+
                   )
             }}
             validationSchema={validationSchema}>

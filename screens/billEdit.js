@@ -28,7 +28,7 @@ const validationSchema = yup.object({
   cost: yup.string().required(),
 });
 
-export default function BillEdit({route}) {
+export default function BillEdit({route, navigation}) {
   const Name = 'Supreme Court';
   const title = "Re: " + route.params.data.title;
   const preamble = route.params.data.preamble;
@@ -84,7 +84,9 @@ export default function BillEdit({route}) {
               firestore()
                 .collection('Bills')
                 .add(values)
-                .then(alert('Bill Recreated'));
+                .then(console.log('Bill Recreated'));
+            
+            navigation.navigate("AdminPage")
             }}
             validationSchema={validationSchema}>
             {props => {

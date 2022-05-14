@@ -13,7 +13,7 @@ import RNPoll, {IChoice} from 'react-native-poll';
 import RNAnimated from 'react-native-animated-component';
 import firestore from '@react-native-firebase/firestore';
 
-const billvoting = ({route}) => {
+const billvoting = ({route, navigation}) => {
   const [voted, setVoted] = useState(false);
   const [loading, setloading] = useState(true);
   useEffect(() => {
@@ -140,8 +140,8 @@ const billvoting = ({route}) => {
           }}
         />
         <View>
-          <Pressable style={styles.button} onPress={()=>{alert("your vote has been recorded")}}>
-            <Text style={styles.text3}>Vote</Text>
+          <Pressable style={styles.button}  onPress={()=>navigation.navigate("View", {"name":username, "userId":userId})}>
+            <Text style={styles.text3}>Back to Home</Text>
           </Pressable>
         </View>
       </View>
