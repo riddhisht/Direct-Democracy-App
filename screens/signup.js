@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, TextInput,ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -10,50 +17,44 @@ const SignupScreen = ({navigation}) => {
   const [aadhar, setaadhar] = useState(0);
   const [password, setpassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
-  const [nameError, setnameError] = useState('')
-  const [emailError,setemailError] = useState('')
-  const [numberError, setnumberError] = useState('')
-  const [aadharError, setaadharError] = useState('')
-  const [passError, setpassError] = useState('')
-  const [cpassError, setcpassError] = useState('')
+  const [nameError, setnameError] = useState('');
+  const [emailError, setemailError] = useState('');
+  const [numberError, setnumberError] = useState('');
+  const [aadharError, setaadharError] = useState('');
+  const [passError, setpassError] = useState('');
+  const [cpassError, setcpassError] = useState('');
   const putdata = () => {
-    if(!name){
-      setnameError("Name is required");
-    }
-    else{
+    if (!name) {
+      setnameError('Name is required');
+    } else {
       setnameError('');
     }
-    if(!email){
-      setemailError("Name is required");
-    }
-    else{
+    if (!email) {
+      setemailError('Name is required');
+    } else {
       setemailError('');
     }
-    if(!number){
-      setnumberError("Name is required");
-    }
-    else{
+    if (!number) {
+      setnumberError('Name is required');
+    } else {
       setnumberError('');
     }
-    if(!aadhar){
-      setaadharError("Name is required");
-    }
-    else{
+    if (!aadhar) {
+      setaadharError('Name is required');
+    } else {
       setaadharError('');
     }
-    if(!password){
-      setpassError("Name is required");
-    }
-    else{
+    if (!password) {
+      setpassError('Name is required');
+    } else {
       setpassError('');
     }
-    if(!confirmPass){
-      setcpassError("Name is required");
-    }
-    else{
+    if (!confirmPass) {
+      setcpassError('Name is required');
+    } else {
       setcpassError('');
     }
-    if(name&email&number&aadhar&password&confirmPass){
+    if (name & email & number & aadhar & password & confirmPass) {
       auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
@@ -85,69 +86,69 @@ const SignupScreen = ({navigation}) => {
           console.error(error);
         });
     }
-      
+
     //addItem(name, email, number, aadhar, password);
     //Alert.alert('Item saved successfully');
   };
   return (
     <ScrollView>
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.headerText}>REGISTRATION</Text>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.headerText}>REGISTRATION</Text>
 
-        <Text style={styles.text}>username</Text>
-        <TextInput
-          title="name"
-          onChangeText={val => setName(val)}
-          style={styles.inputStyle}
-        />
-        <Text style={styles.error}>{nameError}</Text>
-        <Text style={styles.text}>email</Text>
-        <TextInput
-          title="email"
-          onChangeText={val => setEmail(val)}
-          style={styles.inputStyle}
-        />
-        <Text style={styles.error}>{emailError}</Text>
-        <Text style={styles.text}>phone number</Text>
-        <TextInput
-          title="phone"
-          keyboardType="numeric"
-          onChangeText={val => setNum(val)}
-          style={styles.inputStyle}
-        />
-        <Text style={styles.error}>{numberError}</Text>
-        <Text style={styles.text}>aadhar number</Text>
-        <TextInput
-          title="aadhar"
-          onChangeText={val => setaadhar(val)}
-          style={styles.inputStyle}
-        />
-        <Text style={styles.error}>{aadharError}</Text>
-        <Text style={styles.text}>password</Text>
-        <TextInput
-          title="password"
-          onChangeText={val => setpassword(val)}
-          style={styles.inputStyle}
-        />
-        <Text style={styles.error}>{passError}</Text>
-        <Text style={styles.text}> confirm password</Text>
-        <TextInput
-          title="confirmPass"
-          onChangeText={val => setConfirmPass(val)}
-          style={styles.inputStyle}
-        />
-        <Text style={styles.error}>{cpassError}</Text>
-        <View style={styles.submit}>
-          <Button
-            title="Register"
-            onPress={putdata}
-            style={styles.submitButton}
+          <Text style={styles.text}>username</Text>
+          <TextInput
+            title="name"
+            onChangeText={val => setName(val)}
+            style={styles.inputStyle}
           />
+          <Text style={styles.error}>{nameError}</Text>
+          <Text style={styles.text}>email</Text>
+          <TextInput
+            title="email"
+            onChangeText={val => setEmail(val)}
+            style={styles.inputStyle}
+          />
+          <Text style={styles.error}>{emailError}</Text>
+          <Text style={styles.text}>phone number</Text>
+          <TextInput
+            title="phone"
+            keyboardType="numeric"
+            onChangeText={val => setNum(val)}
+            style={styles.inputStyle}
+          />
+          <Text style={styles.error}>{numberError}</Text>
+          <Text style={styles.text}>aadhar number</Text>
+          <TextInput
+            title="aadhar"
+            onChangeText={val => setaadhar(val)}
+            style={styles.inputStyle}
+          />
+          <Text style={styles.error}>{aadharError}</Text>
+          <Text style={styles.text}>password</Text>
+          <TextInput
+            title="password"
+            onChangeText={val => setpassword(val)}
+            style={styles.inputStyle}
+          />
+          <Text style={styles.error}>{passError}</Text>
+          <Text style={styles.text}> confirm password</Text>
+          <TextInput
+            title="confirmPass"
+            onChangeText={val => setConfirmPass(val)}
+            style={styles.inputStyle}
+          />
+          <Text style={styles.error}>{cpassError}</Text>
+          <View style={styles.submit}>
+            <Button
+              title="Register"
+              onPress={putdata}
+              style={styles.submitButton}
+            />
+          </View>
+          <Text style={styles.link}>Already have an account? Sign in</Text>
         </View>
-        <Text style={styles.link}>Already have an account? Sign in</Text>
       </View>
-    </View>
     </ScrollView>
   );
 };
@@ -195,12 +196,12 @@ const styles = StyleSheet.create({
     color: 'blue',
     marginBottom: 10,
   },
-  error:{
+  error: {
     color: 'red',
     fontSize: 10,
     fontWeight: 'bold',
     paddingTop: 8,
     paddingBottom: 5,
-  }
+  },
 });
 export default SignupScreen;

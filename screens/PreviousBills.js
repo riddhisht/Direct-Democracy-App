@@ -20,38 +20,32 @@ const PreviousBills = ({navigation, route}) => {
   const data = route.params.data;
   const username = route.params.name;
   const userId = route.params.userId;
-  console.log(data);
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({item}) => (
-          // return a component using that data
-          // <TouchableOpacity
-          //   onPress={() =>
-          //     navigation.navigate('ViewBill', {
-          //       data: item,
-          //       username: username,
-          //       userId: userId,
-          //     })
-          //   }>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ViewBill', {data: item})}>
-            <View style={styles.listitem}>
-              <View style={styles.topPart}>
-                <Text style={styles.title}>{item.title}</Text>
+        renderItem={({item}) =>
+          currentYear >= item.dueDate[2] && currentMonth >= item.dueDate[1] ? (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ViewBill', {data: item})}>
+              <View style={styles.listitem}>
+                <View style={styles.topPart}>
+                  <Text style={styles.title}>{item.title}</Text>
 
-                <Text style={styles.number} color="white">
-                  Bill Number: {item.number}{' '}
-                </Text>
-                <Text style={styles.endDate}>Status: {item.status} </Text>
-              </View>
-              {/* <View style={styles.bottomCard}>
+                  <Text style={styles.number} color="white">
+                    Bill Number: {item.number}{' '}
+                  </Text>
+                  <Text style={styles.endDate}>Status: {item.status} </Text>
+                </View>
+                {/* <View style={styles.bottomCard}>
             <Text>Comments</Text>
           </View> */}
-            </View>
-          </TouchableOpacity>
-        )}
+              </View>
+            </TouchableOpacity>
+          ) : null
+        }
       />
       <View style={styles.bottomTabNavigator}>
         <TouchableOpacity
