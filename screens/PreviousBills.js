@@ -12,9 +12,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import {Avatar} from 'react-native-elements';
-import firestore from '@react-native-firebase/firestore';
-import {ActivityIndicator} from 'react-native';
 
 const PreviousBills = ({navigation, route}) => {
   const data = route.params.data;
@@ -39,9 +36,6 @@ const PreviousBills = ({navigation, route}) => {
                   </Text>
                   <Text style={styles.endDate}>Status: {item.status} </Text>
                 </View>
-                {/* <View style={styles.bottomCard}>
-            <Text>Comments</Text>
-          </View> */}
               </View>
             </TouchableOpacity>
           ) : null

@@ -12,7 +12,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import {Avatar} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 import {ActivityIndicator} from 'react-native';
 
@@ -25,6 +24,7 @@ const DummyView = ({navigation, route}) => {
   const [loading, setloading] = useState(true);
   const [filterDat, setFilterDat] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [fullBillIds, setFullBillIds] = useState([]);
 
   const searchFilter = text => {
     if (text) {
@@ -48,8 +48,20 @@ const DummyView = ({navigation, route}) => {
       setSearchText(text);
     }
   };
-
+  console.log(fullBillIds);
   useEffect(() => {
+    const billIds = firestore()
+      .collection('Users')
+      .doc(userId)
+      .collection('Bills_voted')
+      .get()
+      .then(collectionSnapshot => {
+        var billId = [];
+        collectionSnapshot.forEach(documentSnapshot => {
+          billId.push(documentSnapshot.id);
+        });
+        setFullBillIds(billId);
+      });
     const currentDate = new Date().getDate();
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
@@ -60,14 +72,12 @@ const DummyView = ({navigation, route}) => {
         var bills = [];
         var expiredBills = [];
         collectionSnapshot.forEach(documentSnapshot => {
-          //console.log('User ID: ', documentSnapshot.id,documentSnapshot.data().number,documentSnapshot.data().title);
           var sfd = documentSnapshot.data().dueDate;
           if (
             currentMonth <= sfd[1] &&
             currentDate <= sfd[0] &&
             currentYear <= sfd[2]
           ) {
-            console.log('true');
             bills.push({
               key: documentSnapshot.id,
               number: documentSnapshot.data().number,
@@ -90,17 +100,20 @@ const DummyView = ({navigation, route}) => {
             setFilterDat(bills);
             setDat(bills);
           } else {
-            console.log('false');
-
             if (
               documentSnapshot.data()['total upvotes'] /
                 documentSnapshot.data()['total downvotes'] >=
-              0.6
+                0.6 &&
+              documentSnapshot.data().status !== 'accepted'
             ) {
               firestore().collection('Bills').doc(documentSnapshot.id).update({
                 status: 'decision',
               });
-            } else {
+            } else if (
+              documentSnapshot.data()['total upvotes'] /
+                documentSnapshot.data()['total downvotes'] <
+              0.6
+            ) {
               firestore().collection('Bills').doc(documentSnapshot.id).update({
                 status: 'rejected',
               });
@@ -159,6 +172,7 @@ const DummyView = ({navigation, route}) => {
             onPress={() =>
               navigation.navigate('Bill Proposal', {
                 name: username,
+                userId: userId,
               })
             }
             style={styles.appButtonText}>
@@ -180,31 +194,56 @@ const DummyView = ({navigation, route}) => {
       </View>
       <FlatList
         data={filterDat}
-        renderItem={({item}) => (
+        renderItem={({item}) =>
           // return a component using that data
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('ViewBill', {
-                data: item,
-                username: username,
-                userId: userId,
-              })
-            }>
-            <View style={styles.listitem}>
-              <View style={styles.topPart}>
-                <Text style={styles.title}>{item.title}</Text>
+          fullBillIds && fullBillIds.indexOf(item.key) >= 0 ? (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ViewBill', {
+                  data: item,
+                  username: username,
+                  userId: userId,
+                })
+              }>
+              <View style={styles.listitem}>
+                <View style={styles.topPart2}>
+                  <Text style={styles.title}>{item.title}</Text>
 
-                <Text style={styles.number} color="white">
-                  Bill Number: {item.number}{' '}
-                </Text>
-                <Text style={styles.endDate}>Due {period}</Text>
-              </View>
-              {/* <View style={styles.bottomCard}>
+                  <Text style={styles.number} color="white">
+                    Bill Number: {item.number}{' '}
+                  </Text>
+                  <Text style={styles.endDate}>Due {period}</Text>
+                </View>
+                {/* <View style={styles.bottomCard}>
                 <Text>Comments</Text>
               </View> */}
-            </View>
-          </TouchableOpacity>
-        )}
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ViewBill', {
+                  data: item,
+                  username: username,
+                  userId: userId,
+                })
+              }>
+              <View style={styles.listitem}>
+                <View style={styles.topPart}>
+                  <Text style={styles.title}>{item.title}</Text>
+
+                  <Text style={styles.number} color="white">
+                    Bill Number: {item.number}{' '}
+                  </Text>
+                  <Text style={styles.endDate}>Due {period}</Text>
+                </View>
+                {/* <View style={styles.bottomCard}>
+              <Text>Comments</Text>
+            </View> */}
+              </View>
+            </TouchableOpacity>
+          )
+        }
       />
       <View style={styles.bottomTabNavigator}>
         <TouchableOpacity
@@ -322,6 +361,15 @@ const styles = StyleSheet.create({
   },
   topPart: {
     backgroundColor: '#537A5A',
+    height: 160,
+    width: '100%',
+    // borderBottomLeftRadius: number,
+    // borderBottomRightRadius: number,
+    borderRadius: 20,
+    color: 'white',
+  },
+  topPart2: {
+    backgroundColor: 'grey',
     height: 160,
     width: '100%',
     // borderBottomLeftRadius: number,
