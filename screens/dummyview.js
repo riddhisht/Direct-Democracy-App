@@ -67,6 +67,7 @@ const DummyView = ({navigation, route}) => {
     const currentYear = new Date().getFullYear();
     const subscriber = firestore()
       .collection('Bills')
+      .orderBy('Date',"desc")
       .get()
       .then(collectionSnapshot => {
         var bills = [];

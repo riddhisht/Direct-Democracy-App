@@ -16,27 +16,12 @@ const AdminReport = ({route, navigation}) => {
   
   const accept = key => {
     //write what happens after accept
-    firestore()
-      .collection('Bills')
-      .doc(key)
-      .update({
-        status: 'accepted',
-      })
-      .then(() => {
-        console.log('bill accepted');
-      });
+
+    navigation.navigate('remark',{key:key,stat:'a'})
   };
   const reject = key => {
     //write what happens after reject
-    firestore()
-      .collection('Bills')
-      .doc(key)
-      .update({
-        status: 'rejected',
-      })
-      .then(() => {
-        console.log('bill rejected');
-      });
+    navigation.navigate('remark',{key:key,stat:'r'})
   };
   const edit = item => {
     //write what happens after edit

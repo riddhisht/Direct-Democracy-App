@@ -25,6 +25,7 @@ import billArticles from './screens/billArticles';
 import AdminReport from './screens/adminReport';
 import BillEdit from './screens/billEdit';
 import loginError from './screens/loginError';
+import remark from './screens/remark';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -75,7 +76,7 @@ const App = () => {
         <Stack.Screen name="billvoting" component={billvoting} />
         <Stack.Screen name="ArcList" component={ArcList} />
         <Stack.Screen name="thankYou" component={thankYou} />
-
+        <Stack.Screen name="remark" component={remark} />
         <Stack.Screen name="ArticleView" component={ArticleView} />
         <Stack.Screen name="ArticleUp" component={ArticleUp} />
         <Stack.Screen name="PreviousBills" component={PreviousBills} />

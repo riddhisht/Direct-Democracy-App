@@ -68,6 +68,7 @@ export default function BillProposal({route, navigation}) {
               values['total upvotes'] = 0;
               values['dueDate']=dueDate;
               values['status']="active";
+              values['Date'] = new Date();
               values['arts']=[];
               console.log(values);
 
