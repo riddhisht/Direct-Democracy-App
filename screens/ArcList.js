@@ -21,6 +21,10 @@ const ArcList = ({navigation, route}) => {
   const [tags, setTags] = useState([]);
   const [userKey, setUserKey] = useState({});
   const [updated, setUpdated] = useState([]);
+  const [filterDat, setFilterDat] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+
   const liked = item => {
     console.log('likedd', item);
     setUserKey(item);
@@ -56,6 +60,30 @@ const ArcList = ({navigation, route}) => {
         dislikes: item.dislikes + 1,
       });
   };
+
+
+  const searchFilter = text => {
+    if (text) {
+      const newData = dat.filter(item => {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const itemData2 = item.preamble
+          ? item.data.toUpperCase()
+          : ''.toUpperCase();
+
+        const textData = text.toUpperCase();
+        return (
+          itemData.indexOf(textData) > -1 || itemData2.indexOf(textData) > -1
+        );
+      });
+      setFilterDat(newData);
+      setSearchText(text);
+    } else {
+      setFilterDat(dat);
+      setSearchText(text);
+    }
+  };
   useEffect(() => {
     console.log('helllllll');
     if (tags !== []) {
@@ -77,6 +105,7 @@ const ArcList = ({navigation, route}) => {
         .then(json => {
           //console.log("returned data: " + json);
           setUpdated(json);
+          setFilterDat(json);
 
           console.log(updated);
           setLoad(false);
@@ -103,6 +132,7 @@ const ArcList = ({navigation, route}) => {
         });
 
         setDat(bills);
+        setFilterDat(bills);
 
         firestore()
           .collection('Users')
@@ -135,8 +165,15 @@ const ArcList = ({navigation, route}) => {
           Upload New Article
         </Text>
       </View>
+      <View style={styles.search}>
+        <TextInput
+          placeholder="Search Bills"
+          value={searchText}
+          onChangeText={text => searchFilter(text)}
+        />
+      </View>
       <FlatList
-        data={updated}
+        data={filterDat}
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity

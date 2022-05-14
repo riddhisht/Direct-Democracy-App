@@ -24,6 +24,8 @@ const ArticleUp = ({navigation, route}) => {
   const [filter, setFilter] = useState();
   const [tog, setTog] = useState('');
   const [arts, setArts] = useState([]);
+  const [un, setUn] = useState("Anonymous");
+
 
   //   const uname = route.params.name;
   const uname = route.params.uname;
@@ -31,47 +33,18 @@ const ArticleUp = ({navigation, route}) => {
   const frombill = route.params.frombill;
   const userId = route.params.userId;
 
+
   const article = {
     title: title,
     data: data,
     hashtags: hashtags,
     likes: likes,
     dislikes: dislikes,
-    uname: uname,
+    uname: un,
   };
 
-  // useEffect(() => {
-  //   console.log('effect');
 
-  //   const output = async () =>{
 
-  //     if (tog !== '') {
-  //       fetch('http://10.0.2.2:5000/filter', {
-  //         method: 'POST',
-  //         headers: {
-  //           //   'Accept': 'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           //name: 'John',
-  //          // password: 'John123',
-  //           data: article.data,
-  //          // utags: Tags,
-  //         }),
-  //       })
-  //         .then(response => response.json())
-  //         .then(json => {
-  //           //console.log("returned data: " + json);
-  //           setFilter(json);
-
-  //         });
-  //     return
-  //       }
-
-  //       await output();
-  //   }
-
-  // }, [tog]);
   const clickhandler = async () => {
     if (frombill === true) {
       const newart = await firestore().collection('Article').add(article);
@@ -99,6 +72,17 @@ const ArticleUp = ({navigation, route}) => {
           <Text style={styles.headerText}>Article Upload {billkey}</Text>
         </View>
         <View style={styles.form}>
+
+        <Text style={styles.titles}>Author Name</Text>
+          <TextInput
+            placeholder="If you want to be anonymous, leave it blank"
+            //onChangeText = {(val)=> {setsalonname(val.charAt(0).toUpperCase()+ val.slice(1).toLowerCase())}}
+            onChangeText={val => {
+              setUn(val);
+            }}
+            style={styles.inputs}
+          />
+
           <Text style={styles.titles}>Title</Text>
           <TextInput
             placeholder="Enter the title of your article"

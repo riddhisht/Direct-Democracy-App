@@ -30,7 +30,7 @@ const validationSchema = yup.object({
 
 export default function BillEdit({route}) {
   const Name = 'Supreme Court';
-  const title = route.params.data.title;
+  const title = "Re: " + route.params.data.title;
   const preamble = route.params.data.preamble;
   const enac = route.params.data.enactingClause;
   const clause = route.params.data.clause;
@@ -106,7 +106,7 @@ export default function BillEdit({route}) {
                     <TextInput
                       onChangeText={props.handleChange('title')}
                       style={styles.textInput}
-                      value={props.values.title}
+                      value={title}
                       onBlur={props.handleBlur('title')}
                     />
                     <Text style={styles.errorText}>
