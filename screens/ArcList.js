@@ -85,7 +85,6 @@ const ArcList = ({navigation, route}) => {
     }
   };
   useEffect(() => {
-    console.log('helllllll');
     if (tags !== []) {
       fetch('http://10.0.2.2:5000/', {
         method: 'POST',
@@ -167,9 +166,10 @@ const ArcList = ({navigation, route}) => {
       </View>
       <View style={styles.search}>
         <TextInput
-          placeholder="Search Bills"
+          placeholder="Search Articles"
           value={searchText}
           onChangeText={text => searchFilter(text)}
+          style={styles.searchIt}
         />
       </View>
       <FlatList
@@ -255,6 +255,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: 160,
   },
+  searchIt: {
+    borderWidth: 3,
+    borderRadius: 20,
+    borderColor: '#F19A3E',
+    marginTop: 10,
+  },
   buttonText: {
     color: 'white',
     fontSize: 15,
@@ -269,9 +275,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    padding: 10,
+    padding: 5,
   },
   number: {
     color: 'black',

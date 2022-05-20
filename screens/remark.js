@@ -16,86 +16,71 @@ import firestore from '@react-native-firebase/firestore';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const remark = ({navigation, route}) => {
-  
-    const key = route.params.key;
-    const stat = route.params.stat;
-    const [remark, setremark] = useState('');
-    const [error,seterror] = useState('');
-    const checkremark = (key,stat,remark) =>{
-        if(remark){
-            if(stat=='a'){
-                firestore()
-                    .collection('Bills')
-                    .doc(key)
-                    .update({
-                        status: 'accepted',
-                    })
-                    .then(() => {
-                        console.log('bill accepted');
-                    });
-                firestore()
-                    .collection('Bills')
-                    .doc(key)
-                    .update({
-                        remark:remark
-                    })
-                    .then(()=>console.log('remark taken'))
-                navigation.replace('AdminPage')
-            }
-            else if (stat == 'r'){
-                firestore()
-                    .collection('Bills')
-                    .doc(key)
-                    .update({
-                        status: 'rejected',
-                    })
-                    .then(() => {
-                        console.log('bill rejected');
-                    });
-                firestore()
-                    .collection('Bills')
-                    .doc(key)
-                    .update({
-                        remark:remark
-                    })
-                    .then(()=>console.log('remark taken'))
-                navigation.replace('AdminPage')
-            }
-        
-        }
-        else{
-            seterror('please fill the remark')
-        }
+  const key = route.params.key;
+  const stat = route.params.stat;
+  const [remark, setremark] = useState('');
+  const [error, seterror] = useState('');
+  const checkremark = (key, stat, remark) => {
+    if (remark) {
+      if (stat == 'a') {
+        firestore()
+          .collection('Bills')
+          .doc(key)
+          .update({
+            status: 'accepted',
+          })
+          .then(() => {
+            console.log('bill accepted');
+          });
+        firestore()
+          .collection('Bills')
+          .doc(key)
+          .update({
+            remark: remark,
+          })
+          .then(() => console.log('remark taken'));
+        navigation.replace('AdminPage');
+      } else if (stat == 'r') {
+        firestore()
+          .collection('Bills')
+          .doc(key)
+          .update({
+            status: 'rejected',
+          })
+          .then(() => {
+            console.log('bill rejected');
+          });
+        firestore()
+          .collection('Bills')
+          .doc(key)
+          .update({
+            remark: remark,
+          })
+          .then(() => console.log('remark taken'));
+        navigation.replace('AdminPage');
+      }
+    } else {
+      seterror('please fill the remark');
     }
+  };
 
-   
-    
-
-return(
-    
+  return (
     <View>
-    <Text style={styles.text}>Remark </Text>
-    <TextInput
-    title='remark'
-    onChangeText={val=>setremark(val)}
-    style={styles.inputs}
-    />
-    <Text style={styles.error}>{error}</Text>
-    
-    <Button
-    title='confirm'
-        onPress={()=>checkremark(key,stat,remark)}
-    />
+      <Text style={styles.text}>Remark </Text>
+      <TextInput
+        title="remark"
+        onChangeText={val => setremark(val)}
+        style={styles.inputs}
+      />
+      <Text style={styles.error}>{error}</Text>
+
+      <Button title="confirm" onPress={() => checkremark(key, stat, remark)} />
     </View>
-    
-)
-    //   const uname = route.params.name;
-//   const uname = route.params.uname;
-//   const billkey = route.params.billkey;
-//   const frombill = route.params.frombill;
-  
-
-
+  );
+  //   const uname = route.params.name;
+  //   const uname = route.params.uname;
+  //   const billkey = route.params.billkey;
+  //   const frombill = route.params.frombill;
 
   // useEffect(() => {
   //   console.log('effect');
@@ -120,19 +105,16 @@ return(
   //         .then(json => {
   //           //console.log("returned data: " + json);
   //           setFilter(json);
-  
-  
+
   //         });
   //     return
   //       }
 
   //       await output();
   //   }
-    
-  // }, [tog]);
-  
 
-}
+  // }, [tog]);
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

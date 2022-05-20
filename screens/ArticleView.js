@@ -46,56 +46,54 @@ const ArticleView = ({route}) => {
       comments: comments,
     });
   };
+  console.log(comments);
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <View style={styles.topBox}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.name}> - {uname}</Text>
-        </View>
-        <View style={styles.topBox}>
-          <Text style={styles.content}>{data}</Text>
-        </View>
-        <View style={styles.likeDisLikeButton}>
-          <TouchableOpacity onPress={liked} style={styles.appButtonContainer1}>
-            <Text style={styles.buttonText}>Like</Text>
-            <Text style={styles.buttonText}>{likes}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={disliked}
-            style={styles.appButtonContainer3}>
-            <Text style={styles.buttonText}>Dislike</Text>
-            <Text style={styles.buttonText}>{dislikes}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.likeDisLikeButton}>
-          <TextInput
-            style={styles.commentInput}
-            onChangeText={val => {
-              setNewComment(val);
-            }}
-            placeholder="Write a comment..."
-          />
-          <TouchableOpacity
-            onPress={handleEnter}
-            style={styles.appButtonContainer2}>
-            <Text style={styles.enterText}>Enter</Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={comments}
-          renderItem={({item}) => (
-            <View>
-              <View style={styles.commentBox}>
-                <Text style={styles.commentName}>{item.uname} </Text>
-                <Text style={styles.commentContent}>{item.comment} </Text>
-              </View>
-            </View>
-          )}
-        />
-        <Text>{'\n \n'}</Text>
+    // <FlatList style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.topBox}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.name}> - {uname}</Text>
       </View>
-    </ScrollView>
+      <View style={styles.topBox}>
+        <Text style={styles.content}>{data}</Text>
+      </View>
+      <View style={styles.likeDisLikeButton}>
+        <TouchableOpacity onPress={liked} style={styles.appButtonContainer1}>
+          <Text style={styles.buttonText}>Like</Text>
+          <Text style={styles.buttonText}>{likes}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={disliked} style={styles.appButtonContainer3}>
+          <Text style={styles.buttonText}>Dislike</Text>
+          <Text style={styles.buttonText}>{dislikes}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.likeDisLikeButton}>
+        <TextInput
+          style={styles.commentInput}
+          onChangeText={val => {
+            setNewComment(val);
+          }}
+          placeholder="Write a comment..."
+        />
+        <TouchableOpacity
+          onPress={handleEnter}
+          style={styles.appButtonContainer2}>
+          <Text style={styles.enterText}>Enter</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={comments}
+        renderItem={({item}) => (
+          <View>
+            <View style={styles.commentBox}>
+              <Text style={styles.commentName}>{item.uname} </Text>
+              <Text style={styles.commentContent}>{item.comment} </Text>
+            </View>
+          </View>
+        )}
+      />
+      <Text>{'\n \n'}</Text>
+    </View>
   );
 };
 
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   commentBox: {
-    // borderColor: '#F19A3E',
+    borderColor: '#F19A3E',
     borderRadius: 20,
     backgroundColor: '#ECD3B9',
     marginTop: 10,

@@ -7,7 +7,7 @@ const AdminLoginScreen = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  const email= "admin@gmail.com"
+  const email = 'admin@gmail.com';
   const [pass, setPass] = useState('');
 
   useEffect(() => {
@@ -25,13 +25,9 @@ const AdminLoginScreen = ({navigation}) => {
       }),
     })
       .then(response => response.json())
-      .then(json =>
-
-        {
-          console.log(json);
-        },
-      );
-
+      .then(json => {
+        console.log(json);
+      });
   }, []);
 
   useEffect(() => {
@@ -67,7 +63,6 @@ const AdminLoginScreen = ({navigation}) => {
 
         if (error.code === 'auth/wrong-password') {
           console.log('Invalid Password');
-
         }
 
         console.error(error);
@@ -77,17 +72,15 @@ const AdminLoginScreen = ({navigation}) => {
   if (!user) {
     return (
       <View style={styles.container}>
-        
-        
         <Text style={styles.text}>Password</Text>
         <TextInput
           placeholder="Enter Password"
           onChangeText={val => setPass(val)}
+          style={styles.search}
         />
-        <Button title="Sign in" onPress={login} />
-
-      
-       
+        <View style={styles.buttonOP}>
+        <Button title="Sign in" onPress={login}  />
+        </View>
       </View>
     );
   }
@@ -101,12 +94,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: 'red',
   },
+  buttonOP: {
+    width: '30%',
+    marginLeft: 110,
+  },
+  search: {
+    borderWidth: 3,
+    borderRadius: 20,
+    borderColor: 'blue',
+    marginTop: 10,
+    marginBottom: 10,
+  },
   container: {
     // flex:1,
     // justifyContent: 'center',
     // alignItems: 'center',
     // padding: 10,
     // color: 'white'
+    width: '80%',
+    marginLeft: 35,
   },
 });
 

@@ -74,6 +74,7 @@ const DummyView = ({navigation, route}) => {
         var expiredBills = [];
         collectionSnapshot.forEach(documentSnapshot => {
           var sfd = documentSnapshot.data().dueDate;
+          console.log(documentSnapshot.data().remark);
           if (
             currentMonth <= sfd[1] &&
             currentDate <= sfd[0] &&
@@ -137,6 +138,7 @@ const DummyView = ({navigation, route}) => {
               upvotes: documentSnapshot.data()['total upvotes'],
               dueDate: documentSnapshot.data().dueDate,
               arts: documentSnapshot.data().arts,
+              remark: documentSnapshot.data().remark,
             });
             setExpiredBillsData(expiredBills);
           }

@@ -75,12 +75,16 @@ const LoginScreen = ({navigation}) => {
 
         if (error.code === 'auth/invalid-email') {
           console.log('That email address is invalid!');
-          navigation.replace('loginError',{error:"That email address is invalid!"})
+          navigation.replace('loginError', {
+            error: 'That email address is invalid!',
+          });
         }
 
         if (error.code === 'auth/wrong-password') {
           console.log('Invalid Password');
-          navigation.replace('loginError',{error:"That password is invalid!"})
+          navigation.replace('loginError', {
+            error: 'That password is invalid!',
+          });
         }
 
         console.error(error);

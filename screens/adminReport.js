@@ -6,22 +6,21 @@ import {
   Button,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import RNPrint from 'react-native-print';
 
 const AdminReport = ({route, navigation}) => {
-  
   const accept = key => {
     //write what happens after accept
 
-    navigation.navigate('remark',{key:key,stat:'a'})
+    navigation.navigate('remark', {key: key, stat: 'a'});
   };
   const reject = key => {
     //write what happens after reject
-    navigation.navigate('remark',{key:key,stat:'r'})
+    navigation.navigate('remark', {key: key, stat: 'r'});
   };
   const edit = item => {
     //write what happens after edit
@@ -36,7 +35,6 @@ const AdminReport = ({route, navigation}) => {
       });
     navigation.navigate('billEdit', {data: item});
   };
-
 
   const title = route.params.data.title ? route.params.data.title : '';
   const preamble = route.params.data.preamble;
@@ -54,89 +52,100 @@ const AdminReport = ({route, navigation}) => {
   const key = route.params.data.key;
   const status = route.params.data.status;
   const arts = route.params.data.arts;
-  
-  const [up_percent, setup] = useState(0)
-  const [down_percent, setdown] = useState(0)
 
-  const articleIDs = arts
-  const [dat,setDat] = useState([])
-  const pdfGenerate = async ()=>{
+  const [up_percent, setup] = useState(0);
+  const [down_percent, setdown] = useState(0);
+
+  const articleIDs = arts;
+  const [dat, setDat] = useState([]);
+  const pdfGenerate = async () => {
     const results = await RNHTMLtoPDF.convert({
-      html: '<h1>'+title+ '</h1><br><h1>Total Upvotes:'
-      +upvotes+'</h1><br><h1>Total Downvotes:'+downvotes+
-      '</h1><br><h1>Preamble</h1><br><p>'+preamble+'<p><br><h1>Enacting Clause</h1><br><p>'+enac+
-      '<p><br><h1>Clause</h1><br><p>'+clause+'<p><br><h1>Interpretation Provision</h1><br><p>'+interpretationProvision+
-      '<p><br><h1>Coming Into Provision<h1><br><p>'+comingIntoForceProvision+
-      '<p><br><h1>Summary<h1><br><p>'+summary+'<p><br><h1> Cost <h1><br><p>'+
-       cost+'<p><br>'
-      ,
+      html:
+        '<h1>' +
+        title +
+        '</h1><br><h1>Total Upvotes:' +
+        upvotes +
+        '</h1><br><h1>Total Downvotes:' +
+        downvotes +
+        '</h1><br><h1>Preamble</h1><br><p>' +
+        preamble +
+        '<p><br><h1>Enacting Clause</h1><br><p>' +
+        enac +
+        '<p><br><h1>Clause</h1><br><p>' +
+        clause +
+        '<p><br><h1>Interpretation Provision</h1><br><p>' +
+        interpretationProvision +
+        '<p><br><h1>Coming Into Provision<h1><br><p>' +
+        comingIntoForceProvision +
+        '<p><br><h1>Summary<h1><br><p>' +
+        summary +
+        '<p><br><h1> Cost <h1><br><p>' +
+        cost +
+        '<p><br>',
       fileName: 'test',
       base64: true,
-    })
+    });
 
-    await RNPrint.print({ filePath: results.filePath })
-  }
-  useEffect(()=>{
-    const tot = upvotes+downvotes;
-    setup(((upvotes/tot)*100).toFixed(2))
+    await RNPrint.print({filePath: results.filePath});
+  };
+  useEffect(() => {
+    const tot = upvotes + downvotes;
+    setup(((upvotes / tot) * 100).toFixed(2));
 
-    var articles=[]
-    
-    if (arts){
-      console.log("arts",arts)
-      articleIDs.forEach(pushFunction)
+    var articles = [];
+
+    if (arts) {
+      console.log('arts', arts);
+      articleIDs.forEach(pushFunction);
     }
-    
-    
-    
-    function pushFunction(value, index, array){
-        console.log("dcoum ids, ",value)
-        
-        firestore()
-        .collection("Article")
+
+    function pushFunction(value, index, array) {
+      console.log('dcoum ids, ', value);
+
+      firestore()
+        .collection('Article')
         .doc(value)
-        .onSnapshot(documentSnapshot=>{
-            console.log("document  ", documentSnapshot.data().title)
-            articles.push({
-                // 'title': documentSnapshot.data().title,
-                // 'key': documentSnapshot.id,
-                // "hashtags": documentSnapshot.data().hashtags,
+        .onSnapshot(documentSnapshot => {
+          console.log('document  ', documentSnapshot.data().title);
+          articles.push({
+            // 'title': documentSnapshot.data().title,
+            // 'key': documentSnapshot.id,
+            // "hashtags": documentSnapshot.data().hashtags,
 
-                key: documentSnapshot.id,
-                title: documentSnapshot.data().title,
-                data: documentSnapshot.data().data,
-                likes: documentSnapshot.data().likes,
-                dislikes: documentSnapshot.data().dislikes,
-                hashtags: documentSnapshot.data().hashtags,
-                uname: documentSnapshot.data().uname,
-            })
-            setDat(articles)
-
-        })
-        
-    
+            key: documentSnapshot.id,
+            title: documentSnapshot.data().title,
+            data: documentSnapshot.data().data,
+            likes: documentSnapshot.data().likes,
+            dislikes: documentSnapshot.data().dislikes,
+            hashtags: documentSnapshot.data().hashtags,
+            uname: documentSnapshot.data().uname,
+          });
+          setDat(articles);
+        });
     }
     //setDat(articles)
-    
-    console.log("articles", dat)
-    
-    
 
-    
-  },[])
+    console.log('articles', dat);
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
       {/* <Text> Admin page</Text>
       <Text>{status}</Text> */}
-      <Text style={styles.title}>{title} {"\n"}</Text>
+      <Text style={styles.title}>
+        {title} {'\n'}
+      </Text>
       {/* <Text style={styles.content}>{title}</Text> */}
-      
-      <Text style={styles.title} >Total Upvotes: {upvotes}</Text>
-      <Text style={styles.title}>Total Downvotes: {downvotes} {"\n"}</Text>
+
+      <Text style={styles.title}>Total Upvotes: {upvotes}</Text>
+      <Text style={styles.title}>
+        Total Downvotes: {downvotes} {'\n'}
+      </Text>
 
       <Text style={styles.title}>{up_percent}% for the motion</Text>
-      <Text style={styles.title}>{(100 - up_percent).toFixed(2)}% against the motion  {"\n"}</Text>
+      <Text style={styles.title}>
+        {(100 - up_percent).toFixed(2)}% against the motion {'\n'}
+      </Text>
 
       <Text style={styles.title}>Preamble</Text>
       <Text style={styles.content}>{preamble}</Text>
@@ -156,8 +165,6 @@ const AdminReport = ({route, navigation}) => {
       <Text style={styles.title}>summary</Text>
       <Text style={styles.content}>{summary}</Text>
 
-      
-
       <Text style={styles.title}>Cost: </Text>
       <Text style={styles.content}>{cost}</Text>
 
@@ -167,23 +174,27 @@ const AdminReport = ({route, navigation}) => {
         renderItem={({item}) => (
           // return a component using that data
           <TouchableOpacity
-
-          onPress={()=>
-          navigation.navigate("ArticleView",{ item: item, username: username, userId, userId})
-          }
+            onPress={() =>
+              navigation.navigate('ArticleView', {
+                item: item,
+                username: username,
+                userId,
+                userId,
+              })
+            }
             // onPress={() =>
             //   navigation.navigate('ViewBill', {
             //     data: item,
             //     username: username,
             //     userId: userId,
             //   })
-            >
+          >
             <View style={styles.listitem}>
               <View style={styles.topPart}>
                 <Text style={styles.title}>{item.title}</Text>
 
                 <Text style={styles.number} color="white">
-                 Hashtags: {item.hashtags}{' '}
+                  Hashtags: {item.hashtags}{' '}
                 </Text>
               </View>
               {/* <View style={styles.bottomCard}>
@@ -211,22 +222,24 @@ const AdminReport = ({route, navigation}) => {
         />
       )}
 
-      <Text>{"\n"}{"\n"}</Text>
-       <Button
-                  title="Accept"
-                  color="green"
-                  onPress={() => accept(key)}
-                />
-                <Button
-                  title="Reject"
-                  color="red"
-                  onPress={() => reject(key)}
-                />
+      <Text>
+        {'\n'}
+        {'\n'}
+      </Text>
+      <Button title="Accept" color="green" onPress={() => accept(key)} />
+      <Button title="Reject" color="red" onPress={() => reject(key)} />
 
-            <Button title="Edit" color="grey" onPress={() => edit(route.params.data)} /> 
-            <Button title ='Generate Report' color ="blue" onPress={pdfGenerate} />
+      <Button
+        title="Edit"
+        color="grey"
+        onPress={() => edit(route.params.data)}
+      />
+      <Button title="Generate Report" color="blue" onPress={pdfGenerate} />
 
-      <Text>{"\n"}{"\n"}</Text>
+      <Text>
+        {'\n'}
+        {'\n'}
+      </Text>
     </ScrollView>
   );
 };

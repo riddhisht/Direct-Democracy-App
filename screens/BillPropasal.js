@@ -15,7 +15,7 @@ import {
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import firestore from '@react-native-firebase/firestore';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
 const validationSchema = yup.object({
   number: yup.string().required(),
@@ -31,13 +31,13 @@ const validationSchema = yup.object({
 
 export default function BillProposal({route, navigation}) {
   const Name = route.params.name;
-  const userId = route.params.userId
-  
-  // let tomorrow = new Date(year, month, day  + 3) 
+  const userId = route.params.userId;
+
+  // let tomorrow = new Date(year, month, day  + 3)
   // const currentDate = new Date().getDate();
   // const currentMonth = new tomorrow.getMonth() + 1;
   // const currentYear = new tomorrow.getFullYear();
-  const dueDate =[31,5,2022]
+  const dueDate = [31, 5, 2022];
   console.log(dueDate);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -60,16 +60,16 @@ export default function BillProposal({route, navigation}) {
               cost: '',
             }}
             onSubmit={(values, actions) => {
-              navigation.navigate("View", {"name":Name, "userId":userId})
+              navigation.navigate('View', {name: Name, userId: userId});
 
               actions.resetForm();
-              values['name'] = Name;
+              values.name = Name;
               values['total downvotes'] = 0;
               values['total upvotes'] = 0;
-              values['dueDate']=dueDate;
-              values['status']="active";
-              values['Date'] = new Date();
-              values['arts']=[];
+              values.dueDate = dueDate;
+              values.status = 'active';
+              values.Date = new Date();
+              values.arts = [];
               console.log(values);
 
               // fetch('https://directdemo-c8f7a-default-rtdb.asia-southeast1.firebasedatabase.app/bills.json',
@@ -84,24 +84,23 @@ export default function BillProposal({route, navigation}) {
               // })
               firestore().collection('Bills').add(values);
               fetch('https://fcm.googleapis.com/fcm/send', {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                      'Authorization': 'key=AAAAbICcrgA:APA91bFua2I_QOMauNhm4yOrlApDcxRouzszKWai6Cj2WKiXGeKm13AwgByTBedIRUaGiiEgOZWJTWswIj5FGw1jHTiyG65lLJhb9xcx2jydM6hXJeRgGTGBsmJSdUm6yr6UL1hXU8qH'
-                    },
-                    body: JSON.stringify({
-                      "notification":{
-                        "body":values["preamble"],
-                        "title":values["title"]
-                      },
-                      'to':'/topics/All'
-                    }),
-                  }).then((response)=>{
-                    console.log(response);
-                  }
-
-                  )
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  Authorization:
+                    'key=AAAAbICcrgA:APA91bFua2I_QOMauNhm4yOrlApDcxRouzszKWai6Cj2WKiXGeKm13AwgByTBedIRUaGiiEgOZWJTWswIj5FGw1jHTiyG65lLJhb9xcx2jydM6hXJeRgGTGBsmJSdUm6yr6UL1hXU8qH',
+                },
+                body: JSON.stringify({
+                  notification: {
+                    body: values.preamble,
+                    title: values.title,
+                  },
+                  to: '/topics/All',
+                }),
+              }).then(response => {
+                console.log(response);
+              });
             }}
             validationSchema={validationSchema}>
             {props => {
@@ -111,6 +110,7 @@ export default function BillProposal({route, navigation}) {
                     <Text style={styles.HeaderText}>Write the Bill Number</Text>
                     <TextInput
                       onChangeText={props.handleChange('number')}
+                      placeholder="Enter a numerical title for your bill"
                       style={styles.textInput}
                       keyboardType="numeric"
                       value={props.values.number}

@@ -35,6 +35,11 @@ const PreviousBills = ({navigation, route}) => {
                     Bill Number: {item.number}{' '}
                   </Text>
                   <Text style={styles.endDate}>Status: {item.status} </Text>
+                  {item.remark ? (
+                    <Text style={styles.text}>Remark : {item.remark}</Text>
+                  ) : (
+                    <Text />
+                  )}
                 </View>
               </View>
             </TouchableOpacity>

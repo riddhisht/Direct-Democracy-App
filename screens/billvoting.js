@@ -68,8 +68,8 @@ const billvoting = ({route, navigation}) => {
             {'\n'}
           </Text>
         </View>
-
-        <Text>You have already voted for this bill</Text>
+        
+        <Text style={styles.text2}> {'\n'} You have already voted for this bill</Text>
       </View>
     );
   } else {
