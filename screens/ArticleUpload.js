@@ -57,6 +57,7 @@ const ArticleUp = ({navigation, route}) => {
           // arts: FieldValue.arrayU;nion("newvalueeeeee")
           arts: firestore.FieldValue.arrayUnion(newart.id),
         });
+        navigation.navigate('View', {username:uname, userId: userId});
     } else {
       navigation.navigate('thankYou', {article: article, userId: userId});
       // firestore().collection('Article').add(article)

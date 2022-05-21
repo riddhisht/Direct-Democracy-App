@@ -18,7 +18,7 @@ import {ActivityIndicator} from 'react-native';
 const DummyView = ({navigation, route}) => {
   const username = route.params.name;
   const userId = route.params.userId;
-  const [period, setPeriod] = useState('21/2/21');
+  const [period, setPeriod] = useState('24/5/22');
   const [dat, setDat] = useState([]);
   const [expiredBillsData, setExpiredBillsData] = useState([]);
   const [loading, setloading] = useState(true);
